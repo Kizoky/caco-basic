@@ -3,6 +3,7 @@ version "4.1.3"
 #include "zscript/enemy/CacoBasic.Caco.txt"
 #include "zscript/enemy/CacoBasic.PrincipalOfSin.txt"
 
+#include "zscript/CacoBasic.Door.txt"
 #include "zscript/CacoBasic.EventHandler.txt"
 #include "zscript/CacoBasic.HUD.txt"
 #include "zscript/CacoBasic.Player.txt"

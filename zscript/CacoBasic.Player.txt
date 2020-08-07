@@ -1,0 +1,101 @@
+class BasicsPlayer : PlayerPawn 
+{
+	int RunningStopCooldown;
+	bool RunningStop;
+	override void Tick()
+	{
+		Super.Tick();
+		if ( !player || (player.mo != self) ) return;
+		
+		// Disables Doom's falling bob
+		// Although I don't think we'll need this
+		player.deltaviewheight = ViewHeight;
+		
+		// There's a slight delay before completely stopping the Player
+		UserCmd cmd = player.cmd;
+		if (!(GetPlayerInput(INPUT_FORWARDMOVE)) && !(GetPlayerInput(INPUT_SIDEMOVE)) && !(player.cmd.buttons & BT_JUMP) && player.onground)
+		{	
+			if (level.time > RunningStopCooldown)
+			{
+				vel.xy = (0,0);
+				RunningStop = false;
+			}
+		}
+		else
+		{
+			if (!RunningStop)
+			{
+				RunningStopCooldown = level.time + 8;
+				RunningStop = true;
+			}
+		}
+	}
+
+	Default
+	{
+		Player.DisplayName "The Student";
+		Speed 1;
+		Health 100;
+		Radius 16;
+		Height 56;
+		Mass 100;
+		PainChance 255;
+		Player.ViewBob 0;
+		Player.ForwardMove 0.40, 0.38; //(walk, run)
+		Player.SideMove 0.40, 0.38; //(walk, run)
+		Player.JumpZ 0;
+		Player.ViewHeight 47;
+	}
+	States
+	{
+	Spawn:
+		PLAY A -1;
+		Loop;
+	See:
+		PLAY ABCD 4;
+		Loop;
+	Missile:
+		PLAY E 12;
+		Goto Spawn;
+	Melee:
+		PLAY F 6 BRIGHT;
+		Goto Missile;
+	Pain:
+		PLAY G 4;
+		PLAY G 4 A_Pain;
+		Goto Spawn;
+	Death:
+		PLAY H 0 A_PlayerSkinCheck("AltSkinDeath");
+	Death1:
+		PLAY H 10;
+		PLAY I 10 A_PlayerScream;
+		PLAY J 10 A_NoBlocking;
+		PLAY KLM 10;
+		PLAY N -1;
+		Stop;
+	XDeath:
+		PLAY O 0 A_PlayerSkinCheck("AltSkinXDeath");
+	XDeath1:
+		PLAY O 5;
+		PLAY P 5 A_XScream;
+		PLAY Q 5 A_NoBlocking;
+		PLAY RSTUV 5;
+		PLAY W -1;
+		Stop;
+	AltSkinDeath:
+		PLAY H 6;
+		PLAY I 6 A_PlayerScream;
+		PLAY JK 6;
+		PLAY L 6 A_NoBlocking;
+		PLAY MNO 6;
+		PLAY P -1;
+		Stop;
+	AltSkinXDeath:
+		PLAY Q 5 A_PlayerScream;
+		PLAY R 0 A_NoBlocking;
+		PLAY R 5 A_SkullPop;
+		PLAY STUVWX 5;
+		PLAY Y -1;
+		Stop;
+	}
+}

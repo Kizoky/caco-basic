@@ -1,17 +1,17 @@
 GameInfo
 {
-	PlayerClasses = "SideScrollerPlayer"
-	StatusBarClass = "SideScrollerHUD"
-	AddEventHandlers = "SideScrollerHandler", "RadiusDebugHandler"
+	PlayerClasses = "BasicsPlayer"
+	//StatusBarClass = "SideScrollerHUD"
+	AddEventHandlers = "RadiusDebugHandler"
 }
 
-Map MAP01 "Stage 1"
+Map BASICS "Caco's Basics In Dissecting & Sacrificing"
 {
 	Music = ""
 }
 
 DoomEdNums
 {
-  32766 = SCG_LadderHelper
-  32765 = SCG_LadderHelperTop
+  //32766 = SCG_LadderHelper
+  //32765 = SCG_LadderHelperTop
 }
