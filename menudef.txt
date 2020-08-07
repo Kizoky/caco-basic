@@ -1,0 +1,28 @@
+OptionValue "Debugoption"
+{
+    0, "None"
+    1, "Monsters"
+    2, "Pickups"
+	3, "Solids"
+	4, "Shootables"
+	5, "All"
+}
+
+OptionMenu "CBSOptionMenu"
+{
+	Title "Caco's Basics Options"
+	
+	StaticText "Debug Options", "Yellow"
+	StaticText ""
+	StaticText "Displays a box around actors", "White"
+	StaticText "based on Height and Weight, depending on the setting (in realtime)", "White"
+	Option "Radius Debug", "radiusDebug", "Debugoption"
+	
+
+}
+
+AddOptionMenu "OptionsMenu"
+{
+	StaticText " "
+	Submenu "Caco's Basics Options", "CBSOptionMenu"
+}

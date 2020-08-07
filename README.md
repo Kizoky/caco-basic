@@ -1,2 +1,2 @@
 # caco-basic
-Caco's Basic is a Total Conversion mod for GZDoom and a parody of Baldi's Basic
+Caco's Basics is a Total Conversion mod for GZDoom and a parody of Baldi's Basics

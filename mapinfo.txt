@@ -1,0 +1,17 @@
+GameInfo
+{
+	PlayerClasses = "SideScrollerPlayer"
+	StatusBarClass = "SideScrollerHUD"
+	AddEventHandlers = "SideScrollerHandler", "RadiusDebugHandler"
+}
+
+Map MAP01 "Stage 1"
+{
+	Music = ""
+}
+
+DoomEdNums
+{
+  32766 = SCG_LadderHelper
+  32765 = SCG_LadderHelperTop
+}
