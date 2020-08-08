@@ -1,0 +1,59 @@
+class CacoBasics : Pathfinder2
+{
+	int TimeBeforeRuler;
+	
+	override void Tick()
+	{
+		Super.Tick();
+		if (target && TimeBeforeRuler < level.time)
+		{
+			if (goal)
+				A_Face(goal);
+			A_StartSound("caco/whip", CHAN_BODY);
+			A_Recoil(-6);
+			TimeBeforeRuler = level.time + 35 * 1;
+		}
+	
+	}
+	
+	Default
+	{
+		Health 666;
+		Radius 25;
+		Height 56;
+		Mass 400;
+		Speed 0.25;
+		PainChance 0;
+		Monster;
+		SeeSound "";
+		PainSound "";
+		DeathSound "";
+		ActiveSound "";
+		Obituary "$OB_CACO";
+		HitObituary "$OB_CACOHIT";
+		Tag "$FN_CACO";
+		-SOLID
+	}
+	States
+	{
+	Spawn:
+		HEAD A 10 A_Look;
+		Loop;
+	See:
+		HEAD A 3 A_Star();
+		Goto See;
+	Pain:
+		HEAD E 3;
+		HEAD E 3 A_Pain;
+		HEAD F 6;
+		Goto See;
+	Death:
+		HEAD G 8;
+		HEAD H 8 A_Scream;
+		HEAD I 8;
+		HEAD J 8;
+		HEAD K 8 A_NoBlocking;
+		HEAD L -1 A_SetFloorClip;
+		Stop;
+	}
+}
