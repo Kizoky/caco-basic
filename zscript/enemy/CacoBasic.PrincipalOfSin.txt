@@ -40,6 +40,7 @@ class PrincipalBasics : PathFinder2
 		DeathSound "brain/death";
 		-SOLID;
 		Monster;
+		Scale 0.8;
 	}
 	States
 	{
@@ -67,6 +68,7 @@ class PrincipalInterest : Actor
     {
         Radius 16;
         Height 16;
+		Scale 0.3;
 
         RenderStyle "Add";
 
@@ -77,7 +79,7 @@ class PrincipalInterest : Actor
     States
     {
     Spawn:
-        POSS ABCDEFGH 6 Bright
+        BBRN A 6 Bright
         {
             angle += 10;
         }
