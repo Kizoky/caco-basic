@@ -1,5 +1,7 @@
 DoomEdNums
 {
+	1004 = PrincipalInterest
+	1003 = PrincipalBasics
 	1002 = CacoBasics
 	1001 = NavPoint
 }

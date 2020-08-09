@@ -1,0 +1,48 @@
+class BasicsCoreHandler : EventHandler 
+{
+	actor Principal, Caco;
+	Array<Actor> PrincipalPoint;
+	
+	override void WorldTick()
+	{
+		let player = players[consoleplayer].mo;
+		
+		let PrincipalOfSin = PrincipalBasics(Principal);
+		if (PrincipalOfSin && PrincipalOfSin.WaitBeforeActive > level.time)
+		{
+			PrincipalOfSin.InterestPoint.Copy(PrincipalPoint);
+		}
+	}
+   
+	override void PlayerEntered (PlayerEvent e)
+	{
+		// check for multiplayer
+	}
+   
+	int TotalInterestPoints;
+	override void WorldThingSpawned (Worldevent e)
+	{
+		let SpawnedThing = e.Thing;
+		
+		// Grab our famous people
+		// There must be always one so the latter will get ignored
+		if (SpawnedThing is 'CacoBasics' && !Caco)
+			Caco = SpawnedThing;
+			
+		if (SpawnedThing is 'PrincipalBasics' && !Principal)
+			Principal = SpawnedThing;
+			
+		// Grab the interest points for the Principal so he can randomly wander around the map
+		if (SpawnedThing is 'PrincipalInterest')
+		{
+			PrincipalPoint.Push(SpawnedThing);
+			Console.Printf("Total size: %d", PrincipalPoint.Size());
+		}
+		
+	}
+	
+	override void WorldThingDied(WorldEvent e)
+	{	
+		// check later for cheating
+	}
+}
