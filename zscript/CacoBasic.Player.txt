@@ -5,6 +5,7 @@ class BasicsPlayer : PlayerPawn
 	bool RunningStop;
 	
 	double MoveSpeed, RestPoints;
+	int BooksDone;
 	
 	override void Tick()
 	{
@@ -54,6 +55,8 @@ class BasicsPlayer : PlayerPawn
 	{
 		Super.PostBeginPlay();
 		RestPoints = 100;
+		
+		BooksDone = 1;
 	}
 
 	Default

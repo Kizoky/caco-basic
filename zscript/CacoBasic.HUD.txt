@@ -63,10 +63,15 @@ class BasicsStatusBar : BaseStatusBar
 		else if (PPlayer.MoveSpeed < 1.62)
 			DrawString(mSmallFont, "Walking", (1,-10), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
 		
+		// Displays the Resting Points or the message when the Player needs to rest
 		if (PPlayer.RestPoints > 0)
 			DrawString(mHUDFont, FormatNumber(PPlayer.RestPoints, 3), (56, -17), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
 		else
 			DrawString(mSmallFont, "You need to rest!", (101,-92), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+		
+		// Caco is very angry.
+		DrawString(mSmallFont, "Caco's nerves crushed:    / 7", (0,26), DI_ITEM_LEFT_TOP | DI_SCREEN_LEFT_TOP);
+		DrawString(mSmallFont, FormatNumber(PPlayer.BooksDone, 2), (157,26), DI_ITEM_LEFT_TOP | DI_SCREEN_LEFT_TOP);
 			
 		
 	}
