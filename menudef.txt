@@ -8,6 +8,30 @@ OptionValue "Debugoption"
 	5, "All"
 }
 
+LISTMENU "MainMenu"
+{
+	IfGame(Doom, Chex, Strife, Hexen, Heretic)
+	{
+		LineSpacing 16	// This must account for some single-graphic replacements, so it cannot be widened
+		StaticPatch 100, 17, "M_DOOM"
+		Position 97, 72
+		IfOption(ReadThis)
+		{
+			Position 97, 64
+		}
+	}
+
+	IfGame(Doom, Strife, Chex, Hexen, Heretic)
+	{
+		TextItem "Lesson Begin", "n", "PlayerclassMenu"
+		TextItem "HUD Debugging", "n", "XYOffsetMenu"
+		TextItem "Load Game", "l", "LoadGameMenu", 0
+		TextItem "Save Game", "s", "SaveGameMenu",0
+		TextItem "Options","o", "OptionsMenu", 0
+		TextItem "Quit", "q", "QuitMenu", 0
+	}
+}
+
 OptionMenu "CBSOptionMenu"
 {
 	Title "Caco's Basics Options"
@@ -19,6 +43,27 @@ OptionMenu "CBSOptionMenu"
 	Option "Radius Debug", "radiusDebug", "Debugoption"
 	
 
+}
+
+OptionMenu "XYOffsetMenu"
+{
+	StaticText "HUD element XY", "Gold"
+	StaticText ""
+	StaticText "Used for setting HUD elements on the screen", "White"
+	StaticText "Nothing will happen on the screen", White
+	Slider "Width:", "smileyUI_X", -300, 600, 1
+	Slider "Height:", "smileyUI_Y", -300, 600, 1
+	StaticText ""
+	Slider "Width: 5x", "smileyUI_X", -1000, 1000, 5
+	Slider "Height: 5x", "smileyUI_Y", -1000, 1000, 5
+	StaticText ""
+	StaticText ""
+	StaticText "Scaling", "White"
+	Slider "Scale X: 1x", "smileyUI_scaleX", -300, 600, 1
+	Slider "Scale Y: 1x", "smileyUI_scaleY", -300, 600, 1
+	StaticText ""
+	Slider "Scale X: 0.1x", "smileyUI_scaleX", -300, 600, 0.1
+	Slider "Scale Y: 0.1x", "smileyUI_scaleY", -300, 600, 0.1
 }
 
 AddOptionMenu "OptionsMenu"

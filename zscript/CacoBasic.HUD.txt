@@ -1,0 +1,66 @@
+class BasicsStatusBar : BaseStatusBar
+{
+	HUDFont mHUDFont;
+	HUDFont mIndexFont;
+	HUDFont mAmountFont;
+	HUDFont mSmallFont;
+	InventoryBarState diparms;
+	
+	override void Init()
+	{
+		Super.Init();
+		SetSize(0, 320, 200);
+
+		// Create the font used for the fullscreen HUD
+		Font fnt = "HUDFONT_DOOM";
+		mHUDFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft, 1, 1);
+		fnt = "INDEXFONT_DOOM";
+		mIndexFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft);
+		mAmountFont = HUDFont.Create("INDEXFONT");
+		mSmallFont = HUDFont.Create("SMALLFONT");
+		diparms = InventoryBarState.Create();
+		fullscreenOffsets = true;
+
+	}
+
+	override void Draw (int state, double TicFrac)
+	{
+		Super.Draw (state, TicFrac);
+
+		if (state == HUD_StatusBar || state == HUD_Fullscreen)
+		{
+			BeginHUD();
+			DrawMainBar (TicFrac);
+		}
+	}
+
+	protected void DrawMainBar (double TicFrac)
+	{
+		cvar extraXcvar = cvar.findcvar("smileyUI_X");
+		int extraX2 = (extraXcvar.GetInt ());
+		
+		cvar extraYcvar = cvar.findcvar("smileyUI_Y");
+		int extraY2 = (extraYcvar.GetInt ());
+		
+		cvar scaleXcvar = cvar.findcvar("smileyUI_scaleX");
+		int scaleX2 = (scaleXcvar.GetInt());
+		
+		cvar scaleYcvar = cvar.findcvar("smileyUI_scaleY");
+		int scaleY2 = (scaleYcvar.GetInt());
+		
+		BasicsPlayer PPlayer = BasicsPlayer(CPlayer.mo);
+		
+		if (!PPlayer) return;
+		
+		// Draw inventory bar at top right
+		DrawImage("inven", (-2, 3), DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_TOP);
+		
+		//Running or Walking, or Resting
+		if (PPlayer.MoveSpeed == 0)
+			DrawString(mSmallFont, "Resting", (extraX2,extraY2), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+		else if (PPlayer.MoveSpeed > 1.62)
+			DrawString(mSmallFont, "Running", (extraX2,extraY2), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+		else if (PPlayer.MoveSpeed < 1.62)
+			DrawString(mSmallFont, "Walking", (extraX2,extraY2), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+	}
+}
