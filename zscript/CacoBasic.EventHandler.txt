@@ -39,6 +39,30 @@ class BasicsCoreHandler : EventHandler
 			Console.Printf("Total size: %d", PrincipalPoint.Size());
 		}
 		
+		if (SpawnedThing is 'DetentionRoomPlayer')
+		{
+			if (Principal)
+			{
+				let a = PrincipalBasics(Principal);
+				if (a)
+				{
+					a.DetentionRoomPlayer = SpawnedThing;
+				}
+			}
+		}
+		
+		if (SpawnedThing is 'DetentionRoomPrincipal')
+		{
+			if (Principal)
+			{
+				let a = PrincipalBasics(Principal);
+				if (a)
+				{
+					a.DetentionRoomSelf = SpawnedThing;
+				}
+			}
+		}
+		
 	}
 	
 	override void WorldThingDied(WorldEvent e)

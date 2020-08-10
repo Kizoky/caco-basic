@@ -4,4 +4,6 @@ DoomEdNums
 	1003 = PrincipalBasics
 	1002 = CacoBasics
 	1001 = NavPoint
+	1000 = DetentionRoomPlayer
+	999 = DetentionRoomPrincipal
 }

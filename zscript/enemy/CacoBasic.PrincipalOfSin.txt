@@ -2,6 +2,39 @@ class PrincipalBasics : PathFinder2
 {
 	Array<Actor> InterestPoint;
 	int CurrentPoint, WaitBeforeActive;
+	actor DetentionRoomPlayer, DetentionRoomSelf;
+	
+	bool ExecutingInProgress, PunishmentInProgress, PunishmentInTime, DetentionForYou;
+	
+	virtual void SearchForViolators()
+	{
+		if (ExecutingInProgress) return;
+		
+		BlockThingsIterator it = BlockThingsIterator.Create (self, 1024); // 1024
+		
+		while (it.Next ()) 
+		{
+			let next = it.Thing;
+			
+			if (!CheckSight (next, SF_SeePastShootableLines)) // Not in sight
+				continue;
+			
+			if (next is 'BasicsPlayer')
+			{
+				let Player = BasicsPlayer(next);
+				if (Player)
+				{
+					if (Player.MoveSpeed > Player.RunningLength)
+					{
+						goal = null;
+						target = Player;
+						Player.A_StartSound("principal/norunninginthehalls", CHAN_VOICE);
+						ExecutingInProgress = true;
+					}
+				}
+			}
+		}
+	}
 	
 	override void PostBeginPlay()
 	{
@@ -19,7 +52,47 @@ class PrincipalBasics : PathFinder2
 			target = InterestPoint[random(0,InterestPoint.Size()-1)];
 		}
 		
-		if (target && Distance2D(target) < 100 || target is 'PlayerPawn')
+		if (ExecutingInProgress && target is 'BasicsPlayer')
+		{
+			if (target && Distance2D(target) < 100 && !PunishmentInProgress)
+			{
+				target.SetOrigin(DetentionRoomPlayer.pos, TRUE);
+				target.Angle = DetentionRoomPlayer.angle;
+				SetOrigin(DetentionRoomSelf.pos, TRUE);
+				PunishmentInProgress = true;
+			}
+			
+			if (PunishmentInProgress)
+			{
+				if (!PunishmentInTime)
+				{
+					A_StartSound("principal/15", CHAN_VOICE);
+					PunishmentInTime = true;
+				}
+				
+				if (!(IsActorPlayingSound(CHAN_VOICE)) && PunishmentInTime && !DetentionForYou)
+				{
+					A_StartSound("principal/detentionforyou", CHAN_VOICE);
+					DetentionForYou = true;
+				}
+				
+				if (!(IsActorPlayingSound(CHAN_VOICE)) && PunishmentInTime && DetentionForYou)
+				{
+					target = null;
+					goal = null;
+					PunishmentInProgress = false;
+					PunishmentInTime = false;
+					DetentionForYou = false;
+					target = InterestPoint[random(0,InterestPoint.Size()-1)];
+				}
+			
+			}
+		
+		}
+		
+		if (ExecutingInProgress) return;
+		
+		if ((target && Distance2D(target) < 100 || target is 'PlayerPawn') && !ExecutingInProgress)
 		{
 			target = null;
 			goal = null;
@@ -48,7 +121,8 @@ class PrincipalBasics : PathFinder2
 		BBRN A 1;
 		Goto See;
 	See:
-		BBRN A 1 { if (target) A_Star(); }
+		BBRN A 1 { if (target && !invoker.PunishmentInProgress) A_Star(); }
+		BBRN A 0 SearchForViolators();
 		Loop;
 	Pain:
 		BBRN B 36 A_BrainPain;
@@ -80,6 +154,49 @@ class PrincipalInterest : Actor
     {
     Spawn:
         BBRN A 6 Bright
+        {
+            angle += 10;
+        }
+        Loop;
+    }
+}
+
+class DetentionRoomPlayer : Actor
+{
+	Default
+    {
+        Radius 16;
+        Height 16;
+		Scale 0.3;
+
+        +NOGRAVITY
+        +NOBLOCKMAP
+    }
+
+    States
+    {
+    Spawn:
+        BBRN A 6;
+        Loop;
+    }
+}
+
+class DetentionRoomPrincipal : Actor
+{
+	Default
+    {
+        Radius 16;
+        Height 16;
+		Scale 0.3;
+
+        +NOGRAVITY
+        +NOBLOCKMAP
+    }
+
+    States
+    {
+    Spawn:
+        BBRN B 6 Bright
         {
             angle += 10;
         }

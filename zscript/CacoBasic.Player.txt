@@ -4,7 +4,7 @@ class BasicsPlayer : PlayerPawn
 	int RunningStopCooldown;
 	bool RunningStop;
 	
-	double MoveSpeed, RestPoints;
+	double MoveSpeed, RestPoints, RunningLength;
 	int BooksDone;
 	
 	override void Tick()
@@ -17,7 +17,7 @@ class BasicsPlayer : PlayerPawn
 		
 		if (MoveSpeed == 0 && RestPoints <= 100)
 			RestPoints += 0.3;
-		else if (MoveSpeed > 1.62 && RestPoints >= 0)
+		else if (MoveSpeed > RunningLength && RestPoints >= 0)
 			RestPoints -= 0.3;
 		
 		if (RestPoints <= 0)
@@ -55,6 +55,9 @@ class BasicsPlayer : PlayerPawn
 	{
 		Super.PostBeginPlay();
 		RestPoints = 100;
+		
+		// Higher than this means Player is running
+		RunningLength = 1.62;
 		
 		BooksDone = 1;
 	}

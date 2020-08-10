@@ -58,9 +58,9 @@ class BasicsStatusBar : BaseStatusBar
 		//Running, Walking, or Resting
 		if (PPlayer.MoveSpeed == 0)
 			DrawString(mSmallFont, "Resting", (1,-10), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
-		else if (PPlayer.MoveSpeed > 1.62)
+		else if (PPlayer.MoveSpeed > PPlayer.RunningLength)
 			DrawString(mSmallFont, "Running", (1,-10), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
-		else if (PPlayer.MoveSpeed < 1.62)
+		else if (PPlayer.MoveSpeed < PPlayer.RunningLength)
 			DrawString(mSmallFont, "Walking", (1,-10), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
 		
 		// Displays the Resting Points or the message when the Player needs to rest
