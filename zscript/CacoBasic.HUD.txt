@@ -4,6 +4,7 @@ class BasicsStatusBar : BaseStatusBar
 	HUDFont mIndexFont;
 	HUDFont mAmountFont;
 	HUDFont mSmallFont;
+	HUDFont mSmallFont2;
 	InventoryBarState diparms;
 	
 	override void Init()
@@ -49,18 +50,24 @@ class BasicsStatusBar : BaseStatusBar
 		int scaleY2 = (scaleYcvar.GetInt());
 		
 		BasicsPlayer PPlayer = BasicsPlayer(CPlayer.mo);
-		
 		if (!PPlayer) return;
 		
 		// Draw inventory bar at top right
 		DrawImage("inven", (-2, 3), DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_TOP);
 		
-		//Running or Walking, or Resting
+		//Running, Walking, or Resting
 		if (PPlayer.MoveSpeed == 0)
-			DrawString(mSmallFont, "Resting", (extraX2,extraY2), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+			DrawString(mSmallFont, "Resting", (1,-10), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
 		else if (PPlayer.MoveSpeed > 1.62)
-			DrawString(mSmallFont, "Running", (extraX2,extraY2), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+			DrawString(mSmallFont, "Running", (1,-10), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
 		else if (PPlayer.MoveSpeed < 1.62)
-			DrawString(mSmallFont, "Walking", (extraX2,extraY2), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+			DrawString(mSmallFont, "Walking", (1,-10), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+		
+		if (PPlayer.RestPoints > 0)
+			DrawString(mHUDFont, FormatNumber(PPlayer.RestPoints, 3), (56, -17), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+		else
+			DrawString(mSmallFont, "You need to rest!", (101,-92), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM);
+			
+		
 	}
 }

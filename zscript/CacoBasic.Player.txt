@@ -4,16 +4,28 @@ class BasicsPlayer : PlayerPawn
 	int RunningStopCooldown;
 	bool RunningStop;
 	
-	double MoveSpeed;
+	double MoveSpeed, RestPoints;
 	
 	override void Tick()
 	{
 		Super.Tick();
 		if ( !player || (player.mo != self) ) return;
 		
-		
 		// MoveSpeed > 1.62 = running
 		MoveSpeed = vel.xy.Length();
+		
+		if (MoveSpeed == 0 && RestPoints <= 100)
+			RestPoints += 0.3;
+		else if (MoveSpeed > 1.62 && RestPoints >= 0)
+			RestPoints -= 0.3;
+		
+		if (RestPoints <= 0)
+		{
+			A_SetSpeed(0.3);
+		}
+		else
+			A_SetSpeed(1);
+		
 		// Disables Doom's falling bob
 		// Although I don't think we'll need this
 		player.deltaviewheight = ViewHeight;
@@ -36,6 +48,12 @@ class BasicsPlayer : PlayerPawn
 				RunningStop = true;
 			}
 		}
+	}
+	
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		RestPoints = 100;
 	}
 
 	Default
