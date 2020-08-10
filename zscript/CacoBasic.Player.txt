@@ -1,12 +1,17 @@
 class BasicsPlayer : PlayerPawn 
 {
+	// I don't want to touch Doom's movement code as I don't know fully well how it works
 	int RunningStopCooldown;
 	bool RunningStop;
+	
+	double MoveSpeed;
+	
 	override void Tick()
 	{
 		Super.Tick();
 		if ( !player || (player.mo != self) ) return;
-		
+			
+		MoveSpeed = vel.xy.Length();
 		// Disables Doom's falling bob
 		// Although I don't think we'll need this
 		player.deltaviewheight = ViewHeight;
@@ -41,8 +46,8 @@ class BasicsPlayer : PlayerPawn
 		Mass 100;
 		PainChance 255;
 		Player.ViewBob 0;
-		Player.ForwardMove 0.40, 0.38; //(walk, run)
-		Player.SideMove 0.40, 0.38; //(walk, run)
+		Player.ForwardMove 0.20, 0.30; //(walk, run)
+		Player.SideMove 0.20, 0.30; //(walk, run)
 		Player.JumpZ 0;
 		Player.ViewHeight 47;
 	}

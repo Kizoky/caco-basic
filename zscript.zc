@@ -121,7 +121,7 @@ class Pathfinder2 : Actor
 
     action void A_Star()
     {
-        if (CheckSight(target) && Distance2D(target) < 250)
+        if (CheckSight(target) && Distance2D(target) < 100)
         {
             invoker.path.Clear();
             goal = null;
