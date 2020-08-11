@@ -19,7 +19,12 @@ class CacoBasics : Pathfinder2
 			A_SetSpeed(3); A_Star();
 		}
 		else
+		{	
+			if (goal && !CheckSight (goal, SF_SeePastShootableLines))
+				goal = null;
+				
 			A_SetSpeed(0);
+		}
 	
 	}
 	

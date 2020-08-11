@@ -28,7 +28,7 @@ class PrincipalBasics : PathFinder2
 					{
 						goal = null;
 						target = Player;
-						Player.A_StartSound("principal/norunninginthehalls", CHAN_VOICE);
+						Player.A_StartSound("principal/norunninginthehalls", CHAN_BODY);
 						ExecutingInProgress = true;
 					}
 				}
