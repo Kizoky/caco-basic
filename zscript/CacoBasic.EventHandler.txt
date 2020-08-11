@@ -1,6 +1,7 @@
 class BasicsCoreHandler : EventHandler 
 {
 	actor Principal, Caco;
+	actor DetentionRoomP, DetentionRoomB;
 	Array<Actor> PrincipalPoint;
 	
 	override void WorldTick()
@@ -12,6 +13,8 @@ class BasicsCoreHandler : EventHandler
 		{
 			PrincipalOfSin.InterestPoint.Copy(PrincipalPoint);
 			PrincipalOfSin.CacoTeacher = Caco;
+			PrincipalOfSin.DetentionRoomPlayer = DetentionRoomP;
+			PrincipalOfSin.DetentionRoomSelf = DetentionRoomB;
 		}
 	}
 	
@@ -51,26 +54,12 @@ class BasicsCoreHandler : EventHandler
 		
 		if (SpawnedThing is 'DetentionRoomPlayer')
 		{
-			if (Principal)
-			{
-				let a = PrincipalBasics(Principal);
-				if (a)
-				{
-					a.DetentionRoomPlayer = SpawnedThing;
-				}
-			}
+			DetentionRoomP = SpawnedThing;
 		}
 		
 		if (SpawnedThing is 'DetentionRoomPrincipal')
 		{
-			if (Principal)
-			{
-				let a = PrincipalBasics(Principal);
-				if (a)
-				{
-					a.DetentionRoomSelf = SpawnedThing;
-				}
-			}
+			DetentionRoomB = SpawnedThing;
 		}
 		
 	}
