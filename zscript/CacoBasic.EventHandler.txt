@@ -11,9 +11,19 @@ class BasicsCoreHandler : EventHandler
 		if (PrincipalOfSin && PrincipalOfSin.WaitBeforeActive > level.time)
 		{
 			PrincipalOfSin.InterestPoint.Copy(PrincipalPoint);
+			PrincipalOfSin.CacoTeacher = Caco;
 		}
 	}
-   
+	
+	override void NetworkProcess (ConsoleEvent e)
+	{
+		//let vars = PostalVariables(GlobalsContainer.Find("PostalVariables"));
+		if (e.Name ~== "GoalNull")
+		{
+			Caco.goal = null;
+		}
+	}
+	
 	override void PlayerEntered (PlayerEvent e)
 	{
 		// check for multiplayer

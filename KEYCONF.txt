@@ -1,0 +1,2 @@
+Alias "CacoAIDebug" "netevent \"GoalNull\""
+DefaultBind "G" "CacoAIDebug"

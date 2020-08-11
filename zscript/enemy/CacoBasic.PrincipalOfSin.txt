@@ -2,7 +2,7 @@ class PrincipalBasics : PathFinder2
 {
 	Array<Actor> InterestPoint;
 	int CurrentPoint, WaitBeforeActive;
-	actor DetentionRoomPlayer, DetentionRoomSelf;
+	actor DetentionRoomPlayer, DetentionRoomSelf, CacoTeacher;
 	
 	bool ExecutingInProgress, PunishmentInProgress, PunishmentInTime, DetentionForYou;
 	
@@ -28,8 +28,9 @@ class PrincipalBasics : PathFinder2
 					{
 						goal = null;
 						target = Player;
-						Player.A_StartSound("principal/norunninginthehalls", CHAN_BODY);
+						Player.A_StartSound("principal/norunninginthehalls", CHAN_AUTO);
 						ExecutingInProgress = true;
+						
 					}
 				}
 			}
@@ -67,6 +68,7 @@ class PrincipalBasics : PathFinder2
 				if (!PunishmentInTime)
 				{
 					A_StartSound("principal/15", CHAN_VOICE);
+					CacoTeacher.goal = null;
 					PunishmentInTime = true;
 				}
 				
