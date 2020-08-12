@@ -1,6 +1,6 @@
 class CacoBasics : Pathfinder2
 {
-	int TimeBeforeRuler;
+	int TimeBeforeRuler, DontSpamSight;
 	
 	override void Tick()
 	{
@@ -19,10 +19,15 @@ class CacoBasics : Pathfinder2
 			A_SetSpeed(3); A_Star();
 		}
 		else
-		{	
-			if (goal && !CheckSight (goal, SF_SeePastShootableLines))
+		{
+			// Every 2 seconds it checks if it can see the Player, if yes it will null it's goal out
+			// so it will recalculate it's path to the Player
+			if (CheckSight (target, SF_SeePastShootableLines) && level.time > DontSpamSight)
+			{
+				DontSpamSight = level.time + 35 * 2;
 				goal = null;
-				
+			}
+			
 			A_SetSpeed(0);
 		}
 	
