@@ -76,6 +76,7 @@ class BasicsPlayer : PlayerPawn
 		Player.SideMove 0.08, 0.22; //(walk, run)
 		Player.JumpZ 0;
 		Player.ViewHeight 47;
+		-SOLID
 	}
 	States
 	{
