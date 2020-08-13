@@ -1,6 +1,6 @@
 class BasicsCoreHandler : EventHandler 
 {
-	actor Principal, Caco;
+	actor Principal, Caco, Doot;
 	actor DetentionRoomP, DetentionRoomB;
 	Array<Actor> PrincipalPoint;
 	
@@ -15,6 +15,13 @@ class BasicsCoreHandler : EventHandler
 			PrincipalOfSin.CacoTeacher = Caco;
 			PrincipalOfSin.DetentionRoomPlayer = DetentionRoomP;
 			PrincipalOfSin.DetentionRoomSelf = DetentionRoomB;
+		}
+		
+		let Dootka = DootBasics(Doot);
+		if (Dootka && !Dootka.CopiedPoints)
+		{
+			Dootka.InterestPoint.Copy(PrincipalPoint);
+			Dootka.CopiedPoints = true;
 		}
 	}
 	
@@ -49,18 +56,17 @@ class BasicsCoreHandler : EventHandler
 		if (SpawnedThing is 'PrincipalInterest')
 		{
 			PrincipalPoint.Push(SpawnedThing);
-			Console.Printf("Total size: %d", PrincipalPoint.Size());
+			//Console.Printf("Total size: %d", PrincipalPoint.Size());
 		}
 		
 		if (SpawnedThing is 'DetentionRoomPlayer')
-		{
 			DetentionRoomP = SpawnedThing;
-		}
 		
 		if (SpawnedThing is 'DetentionRoomPrincipal')
-		{
 			DetentionRoomB = SpawnedThing;
-		}
+			
+		if (SpawnedThing is 'DootBasics' && !Doot)
+			Doot = SpawnedThing;
 		
 	}
 	

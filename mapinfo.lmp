@@ -6,4 +6,5 @@ DoomEdNums
 	1001 = NavPoint
 	1000 = DetentionRoomPlayer
 	999 = DetentionRoomPrincipal
+	998 = DootBasics
 }

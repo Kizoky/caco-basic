@@ -5,6 +5,14 @@ class CacoBasics : Pathfinder2
 	override void Tick()
 	{
 		Super.Tick();
+		
+		if (!target) return;
+		
+		if (target && Distance2D(target) < 100)
+		{
+			target.A_Die();
+		}
+		
 		if (target && TimeBeforeRuler < level.time)
 		{
 			if (goal)

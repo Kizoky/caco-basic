@@ -1,0 +1,134 @@
+class DootBasics : Pathfinder2
+{
+	Array<Actor> InterestPoint;
+	bool DootingInProgress, CopiedPoints;
+	bool HearTheDoot;
+	
+	int TimeBeforeTarget;
+	
+	// We seek Players to doot at. Doot doot
+	virtual void SearchForDootable()
+	{
+		if (DootingInProgress || level.time < TimeBeforeTarget) return;
+		
+		BlockThingsIterator it = BlockThingsIterator.Create (self, 1024); // 1024
+		
+		while (it.Next ()) 
+		{
+			let next = it.Thing;
+			
+			if (!CheckSight (next, SF_SeePastShootableLines)) // Not in sight
+				continue;
+			
+			if (next is 'BasicsPlayer')
+			{
+				let Player = BasicsPlayer(next);
+				if (Player)
+				{
+					goal = null;
+					target = Player;
+					Player.A_StartSound("mrdoot/horn", CHAN_AUTO);
+					DootingInProgress = true;
+				}
+			}
+		}
+	}
+	
+	override void Tick()
+	{
+		Super.Tick();
+		
+		if (!target && CopiedPoints)
+		{
+			target = InterestPoint[random(0,InterestPoint.Size()-1)];
+		}
+		
+		if (target is 'BasicsPlayer')
+		{
+			if (DootingInProgress && target && Distance2D(target) < 100)
+			{
+				if (!HearTheDoot)
+				{
+					A_StartSound("mrdoot/doot4", CHAN_VOICE);
+					target.A_Face(self);
+					HearTheDoot = true;
+				}
+				if (HearTheDoot)
+				{
+					A_SetSpeed(0);
+					target.A_SetSpeed(0);
+					if (random[yes]() > 40)
+						angle = random(0,360);
+					
+					target.A_SetSpeed(0);
+					if (!(IsActorPlayingSound(CHAN_VOICE)))
+					{
+						TimeBeforeTarget = level.time + 35 * 7;
+						A_StartSound("mrdoot/horn");
+						HearTheDoot = false;
+						target.A_SetSpeed(1);
+						DootingInProgress = false;
+						A_SetSpeed(10);
+					}
+				}
+			}
+		}
+		
+		if (DootingInProgress) return;
+		
+		if ((target && Distance2D(target) < 100 || target is 'PlayerPawn') && !DootingInProgress && CopiedPoints)
+		{
+			target = null;
+			goal = null;
+			target = InterestPoint[random(0,InterestPoint.Size()-1)];
+		}
+	
+	}
+	
+	Default
+	{
+		Health 300;
+		Radius 20;
+		Height 56;
+		Mass 500;
+		Speed 10;
+		PainChance 100;
+		Monster;
+		MeleeThreshold 196;
+		+MISSILEMORE 
+		+FLOORCLIP
+		SeeSound "";
+		PainSound "";
+		DeathSound "";
+		ActiveSound "";
+		MeleeSound "";
+		HitObituary "$OB_UNDEADHIT";
+		Obituary "$OB_UNDEAD";
+		Tag "$FN_REVEN";
+	}
+	States
+	{
+	Spawn:
+		SKEL AB 10;
+		Goto See;
+	See:
+		SKEL AABBCCDDEEFF 2 { if (!HearTheDoot) A_Star(); }
+		SKEL A 0 SearchForDootable();
+		Loop;
+	Pain:
+		SKEL L 5;
+		SKEL L 5 A_Pain;
+		Goto See;
+	Death:
+		SKEL LM 7;
+		SKEL N 7 A_Scream;
+		SKEL O 7 A_NoBlocking;
+		SKEL P 7;
+		SKEL Q -1;
+		Stop;
+	Raise:
+		SKEL Q 5;
+		SKEL PONML 5;
+		Goto See;
+	}
+}
