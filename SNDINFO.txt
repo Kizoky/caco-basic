@@ -5,15 +5,15 @@ principal/detentionforyou sounds/Principal/detention4u.lmp
 principal/15 sounds/Principal/15sec.lmp
 
 // Note: Had to name the doot-ified songs like this because of RNG
-mrdoot/doot1 sounds/MrDoot/E1M4doot.wav
-mrdoot/doot2 sounds/MrDoot/E1M9doot.wav
-mrdoot/doot3 sounds/MrDoot/E2M3doot.wav
-mrdoot/doot4 sounds/MrDoot/E2M7doot.wav
-mrdoot/doot5 sounds/MrDoot/E2M8doot.wav
-mrdoot/doot6 sounds/MrDoot/E2M9doot.wav
-mrdoot/doot7 sounds/MrDoot/E3M8doot.wav
-mrdoot/bunny sounds/MrDoot/bunnDoot.wav
-mrdoot/horn sounds/MrDoot/horn.wav
+mrdoot/doot1 sounds/MrDoot/E1M4doot.lmp
+mrdoot/doot2 sounds/MrDoot/E1M9doot.lmp
+mrdoot/doot3 sounds/MrDoot/E2M3doot.lmp
+mrdoot/doot4 sounds/MrDoot/E2M7doot.lmp
+mrdoot/doot5 sounds/MrDoot/E2M8doot.lmp
+mrdoot/doot6 sounds/MrDoot/E2M9doot.lmp
+mrdoot/doot7 sounds/MrDoot/E3M8doot.lmp
+mrdoot/bunny sounds/MrDoot/bunnDoot.lmp
+mrdoot/horn sounds/MrDoot/horn.lmp
 
 
 //Level stuff (olz shit)
