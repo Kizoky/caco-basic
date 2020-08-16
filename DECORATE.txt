@@ -1,0 +1,25 @@
+actor plant01 20201
+{
+height 30
+radius 10
+  +FLOORCLIP
+  states
+  {
+  spawn:
+    PLAN T 1 
+    loop
+  }
+}
+
+actor pooper 20202
+{
+height 30
+radius 10
+  +FLOORCLIP
+  states
+  {
+  spawn:
+    TOIL T 1 
+    loop
+  }
+}
