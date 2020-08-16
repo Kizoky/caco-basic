@@ -5,6 +5,12 @@ GameInfo
 	AddEventHandlers = "RadiusDebugHandler"
 }
 
+clearepisodes
+
+episode BASICS
+{
+}
+
 Map BASICS "Caco's Basics In Dissecting & Sacrificing"
 {
 	Music = ""
