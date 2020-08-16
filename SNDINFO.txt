@@ -1,8 +1,8 @@
-caco/whip sounds/Caco/ruler.ogg
+caco/whip sounds/Caco/ruler.lmp
 
-principal/norunninginthehalls sounds/Principal/norunning.ogg
-principal/detentionforyou sounds/Principal/detention4u.ogg
-principal/15 sounds/Principal/15sec.ogg
+principal/norunninginthehalls sounds/Principal/norunning.lmp
+principal/detentionforyou sounds/Principal/detention4u.lmp
+principal/15 sounds/Principal/15sec.lmp
 
 // Note: Had to name the doot-ified songs like this because of RNG
 mrdoot/doot1 sounds/MrDoot/E1M4doot.wav
@@ -14,3 +14,8 @@ mrdoot/doot6 sounds/MrDoot/E2M9doot.wav
 mrdoot/doot7 sounds/MrDoot/E3M8doot.wav
 mrdoot/bunny sounds/MrDoot/bunnDoot.wav
 mrdoot/horn sounds/MrDoot/horn.wav
+
+
+//Level stuff (olz shit)
+
+door/locked sounds/level/DSLOKDOR.lmp
