@@ -19,7 +19,7 @@ class CacoBasics : Pathfinder2
 				A_Face(goal);
 			A_StartSound("caco/whip", CHAN_BODY);
 			//A_Recoil(-6);
-			TimeBeforeRuler = level.time + 35 * 1;
+			TimeBeforeRuler = level.time + 35 * 3;
 		}
 		
 		if (IsActorPlayingSound(CHAN_BODY))
