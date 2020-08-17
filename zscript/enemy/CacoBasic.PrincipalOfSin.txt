@@ -152,9 +152,9 @@ class PrincipalBasics : PathFinder2
 		BBRN B 36 A_BrainPain;
 		Goto Spawn;
 	Death:
-		BBRN A 100 A_BrainScream;
+		BBRN A 100;
 		BBRN AA 10;
-		BBRN A -1 A_BrainDie;
+		BBRN A -1;
 		Stop;
 	}
 }

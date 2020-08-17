@@ -1,14 +1,19 @@
 class CacoBasics : Pathfinder2
 {
+	Array<Actor> InterestPoint;
 	int TimeBeforeRuler, DontSpamSight;
+	bool CopiedPoints;
 	
 	override void Tick()
 	{
 		Super.Tick();
 		
-		if (!target) return;
+		if (!target && CopiedPoints)
+		{
+			target = InterestPoint[random(0,InterestPoint.Size()-1)];
+		}
 		
-		if (target && Distance2D(target) < 100)
+		if (target && target is 'PlayerPawn' && Distance2D(target) < 75)
 		{
 			target.A_StartSound("caco/gameover", CHAN_7);
 			target.A_Face(self);
@@ -28,13 +33,17 @@ class CacoBasics : Pathfinder2
 		
 		if (IsActorPlayingSound(CHAN_BODY))
 		{
+			if (!(InStateSequence(CurState, ResolveState("Whip"))))
+			{
+				SetStateLabel("Whip");
+			}
 			A_SetSpeed(3); A_Star();
 		}
 		else
 		{
 			// Every 2 seconds it checks if it can see the Player, if yes it will null it's goal out
 			// so it will recalculate it's path to the Player
-			if (CheckSight (target, SF_SeePastShootableLines) && level.time > DontSpamSight)
+			if (CheckSight (target, SF_SeePastShootableLines) && level.time > DontSpamSight && Distance2D(target) > 150)
 			{
 				DontSpamSight = level.time + 35 * 2;
 				goal = null;
@@ -66,10 +75,13 @@ class CacoBasics : Pathfinder2
 	States
 	{
 	Spawn:
-		HEAD A 10 A_Look;
+		CACO A 10 A_Look;
 		Loop;
 	See:
-		HEAD A 3 A_Star();
+		CACO A 3 A_Star();
+		Goto See;
+	Whip:
+		CACO BCDEDCB 3 A_Star();
 		Goto See;
 	Pain:
 		HEAD E 3;

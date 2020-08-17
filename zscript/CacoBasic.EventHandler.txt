@@ -23,6 +23,14 @@ class BasicsCoreHandler : EventHandler
 			Dootka.InterestPoint.Copy(PrincipalPoint);
 			Dootka.CopiedPoints = true;
 		}
+		
+		let Cacod = CacoBasics(Caco);
+		if (Cacod && !Cacod.CopiedPoints)
+		{
+			Cacod.InterestPoint.Copy(PrincipalPoint);
+			Cacod.CopiedPoints = true;
+		}
+		
 	}
 	
 	override void NetworkProcess (ConsoleEvent e)
