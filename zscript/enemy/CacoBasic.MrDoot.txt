@@ -46,7 +46,7 @@ class DootBasics : Pathfinder2
 		
 		if (target is 'BasicsPlayer')
 		{
-			if (DootingInProgress && target && Distance2D(target) < 100)
+			if (DootingInProgress && target && Distance2D(target) < 120)
 			{
 				if (!HearTheDoot)
 				{
