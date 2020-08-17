@@ -70,14 +70,14 @@ class PrincipalBasics : PathFinder2
 			
 			if (PunishmentInProgress)
 			{
+				target.A_SetSpeed(0);
 				// Let's say the detention time
-				// And also freeze the Player
 				if (!PunishmentInTime)
 				{
 					A_StartSound("principal/15", CHAN_VOICE);
 					CacoTeacher.goal = null;
+					CacoTeacher.target = target;
 					PunishmentInTime = true;
-					target.A_SetSpeed(0);
 				}
 				
 				// "... Detention for you!"
@@ -99,6 +99,7 @@ class PrincipalBasics : PathFinder2
 					DetentionForYou = false;
 					ExecutingInProgress = false;
 					target = InterestPoint[random(0,InterestPoint.Size()-1)];
+					goal = InterestPoint[random(0,InterestPoint.Size()-1)];
 				}
 			
 			}
