@@ -10,6 +10,10 @@ class CacoBasics : Pathfinder2
 		
 		if (target && Distance2D(target) < 100)
 		{
+			target.A_StartSound("caco/gameover", CHAN_7);
+			target.A_Face(self);
+			A_Face(target); // probably not necessary
+			target.A_TakeInventory("HUDViewable",1);
 			target.A_Die();
 		}
 		

@@ -52,6 +52,8 @@ class BasicsStatusBar : BaseStatusBar
 		BasicsPlayer PPlayer = BasicsPlayer(CPlayer.mo);
 		if (!PPlayer) return;
 		
+		if (!(CheckInventory("HUDViewable"))) return;
+		
 		// Draw inventory bar at top right
 		DrawImage("inven", (-2, 3), DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_TOP);
 		

@@ -1,0 +1,10 @@
+// Takes away the HUD if it's game over for the Player.
+class HUDViewable : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+Inventory.UNDROPPABLE;
+		-Inventory.INVBAR;
+	}
+}

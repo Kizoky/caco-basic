@@ -20,7 +20,7 @@ class DootBasics : Pathfinder2
 			if (!CheckSight (next, SF_SeePastShootableLines)) // Not in sight
 				continue;
 			
-			if (next is 'BasicsPlayer')
+			if (next && next is 'BasicsPlayer' && !next.bKILLED)
 			{
 				let Player = BasicsPlayer(next);
 				if (Player)
@@ -46,6 +46,13 @@ class DootBasics : Pathfinder2
 		
 		if (target is 'BasicsPlayer')
 		{
+			if (target.bKILLED)
+			{
+				target = null;
+				goal = null;
+				DootingInProgress = false;
+			}
+			
 			if (DootingInProgress && target && Distance2D(target) < 120)
 			{
 				if (!HearTheDoot)

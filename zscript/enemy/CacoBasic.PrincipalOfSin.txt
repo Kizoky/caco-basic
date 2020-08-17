@@ -20,7 +20,7 @@ class PrincipalBasics : PathFinder2
 			if (!CheckSight (next, SF_SeePastShootableLines)) // Not in sight
 				continue;
 			
-			if (next is 'BasicsPlayer')
+			if (next && next is 'BasicsPlayer' && !next.bKILLED)
 			{
 				let Player = BasicsPlayer(next);
 				if (Player)
@@ -62,6 +62,14 @@ class PrincipalBasics : PathFinder2
 		{
 			if (target && Distance2D(target) < 100 && !PunishmentInProgress)
 			{
+				if (target.bKILLED)
+				{
+					ExecutingInProgress = false;
+					target = null;
+					goal = null;
+					return;
+				}
+				
 				target.SetOrigin(DetentionRoomPlayer.pos, TRUE);
 				target.Angle = DetentionRoomPlayer.angle;
 				SetOrigin(DetentionRoomSelf.pos, TRUE);
