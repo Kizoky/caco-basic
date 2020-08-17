@@ -26,8 +26,9 @@ class DootBasics : Pathfinder2
 				if (Player)
 				{
 					goal = null;
+					target = null;
 					target = Player;
-					Player.A_StartSound("mrdoot/horn", CHAN_AUTO);
+					Player.A_StartSound("mrdoot/horn", CHAN_BODY);
 					DootingInProgress = true;
 				}
 			}
