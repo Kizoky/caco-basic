@@ -97,6 +97,7 @@ class DootBasics : Pathfinder2
 		MeleeThreshold 196;
 		+MISSILEMORE 
 		+FLOORCLIP
+		-SOLID
 		SeeSound "";
 		PainSound "";
 		DeathSound "";
