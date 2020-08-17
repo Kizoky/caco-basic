@@ -6,6 +6,7 @@ class PrincipalBasics : PathFinder2
 	
 	bool ExecutingInProgress, PunishmentInProgress, PunishmentInTime, DetentionForYou;
 	
+	// Checks for something rule breaking event, be it Player speed, Bullying, eating, etc..
 	virtual void SearchForViolators()
 	{
 		if (ExecutingInProgress) return;
@@ -48,11 +49,15 @@ class PrincipalBasics : PathFinder2
 	{
 		Super.Tick();
 		
+		// PoS will randomly wander around the map if he's activated.
 		if (!target && level.time > WaitBeforeActive)
 		{
 			target = InterestPoint[random(0,InterestPoint.Size()-1)];
 		}
 		
+		// Player broke the rule. Let's punish him
+		// First we need to get closer to him, and be our target
+		// If we catched them, teleport him and us in the Detention Room via actor pointers
 		if (ExecutingInProgress && target is 'BasicsPlayer')
 		{
 			if (target && Distance2D(target) < 100 && !PunishmentInProgress)
@@ -65,21 +70,28 @@ class PrincipalBasics : PathFinder2
 			
 			if (PunishmentInProgress)
 			{
+				// Let's say the detention time
+				// And also freeze the Player
 				if (!PunishmentInTime)
 				{
 					A_StartSound("principal/15", CHAN_VOICE);
 					CacoTeacher.goal = null;
 					PunishmentInTime = true;
+					target.A_SetSpeed(0);
 				}
 				
+				// "... Detention for you!"
 				if (!(IsActorPlayingSound(CHAN_VOICE)) && PunishmentInTime && !DetentionForYou)
 				{
 					A_StartSound("principal/detentionforyou", CHAN_VOICE);
 					DetentionForYou = true;
 				}
 				
+				// And let's doodle away by giving us a random interest point.
 				if (!(IsActorPlayingSound(CHAN_VOICE)) && PunishmentInTime && DetentionForYou)
 				{
+					// Give the Player's speed back
+					target.A_SetSpeed(1);
 					target = null;
 					goal = null;
 					PunishmentInProgress = false;
