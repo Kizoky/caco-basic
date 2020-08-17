@@ -23,3 +23,17 @@ radius 10
     loop
   }
 }
+
+
+actor trashcan 20203
+{
+height 30
+radius 10
+  +FLOORCLIP
+  states
+  {
+  spawn:
+    TRAS H 1 
+    loop
+  }
+}
