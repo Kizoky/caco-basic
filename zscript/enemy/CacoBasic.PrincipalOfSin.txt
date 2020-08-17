@@ -85,6 +85,7 @@ class PrincipalBasics : PathFinder2
 					PunishmentInProgress = false;
 					PunishmentInTime = false;
 					DetentionForYou = false;
+					ExecutingInProgress = false;
 					target = InterestPoint[random(0,InterestPoint.Size()-1)];
 				}
 			
