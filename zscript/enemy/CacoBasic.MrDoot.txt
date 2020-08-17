@@ -50,7 +50,10 @@ class DootBasics : Pathfinder2
 			{
 				if (!HearTheDoot)
 				{
-					A_StartSound("mrdoot/doot4", CHAN_VOICE);
+					// Pick a random doot we will doot
+					int randomnumber = random[pickline](1,7);
+					sound doot = string.Format("mrdoot/doot%i",randomnumber);
+					A_StartSound(doot, CHAN_VOICE, CHANF_NOSTOP);
 					target.A_Face(self);
 					HearTheDoot = true;
 				}
