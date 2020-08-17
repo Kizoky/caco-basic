@@ -58,8 +58,8 @@ class DootBasics : Pathfinder2
 				{
 					A_SetSpeed(0);
 					target.A_SetSpeed(0);
-					if (random[yes]() > 40)
-						angle = random(0,360);
+					if (random[yes]() > 40 && level.time % 10)
+						angle = random(-90,90);
 					
 					target.A_SetSpeed(0);
 					if (!(IsActorPlayingSound(CHAN_VOICE)))
