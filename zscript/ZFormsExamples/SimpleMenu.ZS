@@ -25,6 +25,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
         if (command == "fFirstButton")
         {
             // Change the text's colour to a random colour.
+			link.FirstConfirm = true;
             link.fFirstButton.disabled = true;
 			link.fSecondButton.disabled = false;
 			link.fThirdButton.disabled = false;
@@ -32,6 +33,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		if (command == "fSecondButton")
         {
             // Change the text's colour to a random colour.
+			link.FirstConfirm = true;
             link.fFirstButton.disabled = false;
 			link.fSecondButton.disabled = true;
 			link.fThirdButton.disabled = false;
@@ -39,6 +41,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		if (command == "fThirdButton")
         {
             // Change the text's colour to a random colour.
+			link.FirstConfirm = true;
             link.fFirstButton.disabled = false;
 			link.fSecondButton.disabled = false;
 			link.fThirdButton.disabled = true;
@@ -48,6 +51,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		if (command == "sFirstButton")
         {
             // Change the text's colour to a random colour.
+			link.SecondConfirm = true;
             link.sFirstButton.disabled = true;
 			link.sSecondButton.disabled = false;
 			link.sThirdButton.disabled = false;
@@ -55,6 +59,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		if (command == "sSecondButton")
         {
             // Change the text's colour to a random colour.
+			link.SecondConfirm = true;
             link.sFirstButton.disabled = false;
 			link.sSecondButton.disabled = true;
 			link.sThirdButton.disabled = false;
@@ -62,6 +67,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		if (command == "sThirdButton")
         {
             // Change the text's colour to a random colour.
+			link.SecondConfirm = true;
             link.sFirstButton.disabled = false;
 			link.sSecondButton.disabled = false;
 			link.sThirdButton.disabled = true;
@@ -71,6 +77,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		if (command == "tFirstButton")
         {
             // Change the text's colour to a random colour.
+			link.ThirdConfirm = true;
             link.tFirstButton.disabled = true;
 			link.tSecondButton.disabled = false;
 			link.tThirdButton.disabled = false;
@@ -78,6 +85,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		if (command == "tSecondButton")
         {
             // Change the text's colour to a random colour.
+			link.ThirdConfirm = true;
             link.tFirstButton.disabled = false;
 			link.tSecondButton.disabled = true;
 			link.tThirdButton.disabled = false;
@@ -85,6 +93,7 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		if (command == "tThirdButton")
         {
             // Change the text's colour to a random colour.
+			link.ThirdConfirm = true;
             link.tFirstButton.disabled = false;
 			link.tSecondButton.disabled = false;
 			link.tThirdButton.disabled = true;
@@ -145,7 +154,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 	Samples_ZF_Label tSecondAnswer2;
 	Samples_ZF_Label tThirdAnswer2;
 	
-	Samples_ZF_Button ConfirmButton;
+	Samples_ZF_Button ActiveButton;
 	
 	int FirstCorrect;
 	int fFirst;
@@ -159,6 +168,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 	int CorrectButton;
 	
 	int BasicsRow, BasicsActive;
+	bool FirstConfirm, SecondConfirm, ThirdConfirm;
 	
 	// Please don't put me in jail
 	override void BasicsKeyboard()
@@ -186,6 +196,9 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 			tSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 		if (BasicsRow == 3 && BasicsActive == 3)
 			tThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		
+		if (FirstConfirm && SecondConfirm && ThirdConfirm)
+			Close();
 		
 		Console.Printf("Row: %d | Active: %d", BasicsRow, BasicsActive);
 		
@@ -512,33 +525,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Add the button element into the main frame.
         tThirdButton.Pack (mainFrame);
-		
-		// ----------------------------------------------------------------------------
-        ConfirmButton = new ('Samples_ZF_Button').Init
-        (
-            // Position
-            ((320. + 250.) / 2., (200. + 125.) / 2. ),
-            // Size
-            (18, 18),
-            // Our command handler
-            cmdHandler: handler,
-            // A command string for the button
-            command: "ConfirmButton"
-        );
-        // Set the button's textures.
-        ConfirmButton.SetTexture
-        (
-            // Idle/inactive
-            "graphics/ZFormsExamples/SmallButtonIdle.png",
-            // Hovered
-            "graphics/ZFormsExamples/SmallButtonHovered.png",
-            // Clicked/pressed
-            "graphics/ZFormsExamples/SmallButtonClicked.png",
-            // Disabled
-            "graphics/ZFormsExamples/SmallButtonDisabled.png"
-        );
-        // Add the button element into the main frame.
-        ConfirmButton.Pack (mainFrame);
 
         // ----------------------------------------------------------------------------
 		
