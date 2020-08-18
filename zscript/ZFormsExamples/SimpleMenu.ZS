@@ -70,6 +70,13 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
     Samples_ZF_Label FirstAnswer;
 	Samples_ZF_Label SecondAnswer;
 	Samples_ZF_Label ThirdAnswer;
+	
+	int FirstCorrect;
+	int fFirst;
+	int fSecond;
+	int sFirst, sSecond;
+	
+	int CorrectButton;
 
     override void Init (Menu parent)
     {
@@ -77,7 +84,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         Super.Init (parent);
         // Set our base resolution to 320x200.
         SetBaseResolution ((320, 200));
-
+		
         // Get GZDoom's new options menu smallfont.
         smallFont = OptionFont ();
 
@@ -101,7 +108,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the image element into the main frame.
         background.Pack (mainFrame);
 
-        // Add a button.
+        // ----------------------------------------------------------------------------
         FirstButton = new ('Samples_ZF_Button').Init
         (
             // Position
@@ -128,7 +135,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the button element into the main frame.
         FirstButton.Pack (mainFrame);
 		
-		// Add a button.
+		// ----------------------------------------------------------------------------
         SecondButton = new ('Samples_ZF_Button').Init
         (
             // Position
@@ -155,7 +162,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the button element into the main frame.
         SecondButton.Pack (mainFrame);
 		
-		// Add a button.
+		// ----------------------------------------------------------------------------
         ThirdButton = new ('Samples_ZF_Button').Init
         (
             // Position
@@ -182,7 +189,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the button element into the main frame.
         ThirdButton.Pack (mainFrame);
 		
-		// Add a button.
+		// ----------------------------------------------------------------------------
         ConfirmButton = new ('Samples_ZF_Button').Init
         (
             // Position
@@ -209,7 +216,15 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the button element into the main frame.
         ConfirmButton.Pack (mainFrame);
 
-        // Add a label.
+        // ----------------------------------------------------------------------------
+		
+		// Caco's Basics
+		
+		fFirst = random[ss](1,50);
+		fSecond = random[sd](1,50);
+		FirstCorrect = fFirst + fSecond;
+		CorrectButton = random(1,3);
+		
 		Question = new ('Samples_ZF_Label').Init
         (
             // Position
@@ -217,7 +232,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
-            text: string.Format("What is %d + %d ?",random[ss](1,10), random[sd](1,10)),
+            text: string.Format("What is %d + %d ?",fFirst, fSecond),
             // The font to use
             fnt: smallFont,
             // Whether to automatically wrap the text or not
@@ -230,6 +245,27 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Calculate the horizontal position for the label so that it's centered on the screen.
         Question.box.pos.X = 85;
 		
+		// ----------------------------------------------------------------------------
+		
+		int First, Second, Third;
+		switch (CorrectButton)
+		{
+			case 1:
+				First = FirstCorrect;
+				break;
+			case 2:
+				Second = FirstCorrect;
+				break;
+			case 3:
+				Third = FirstCorrect;
+				break;
+		}
+		
+		if (First == 0) First = random[sf](1,50); + random[sg](1,50);
+		if (Second == 0) Second = random[sf](1,50); + random[sg](1,50);
+		if (Third == 0) Third = random[sf](1,50); + random[sg](1,50);
+		
+		
         FirstAnswer = new ('Samples_ZF_Label').Init
         (
             // Position
@@ -237,7 +273,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
-            text: "5 ",
+            text: string.Format("%d ",First),
             // The font to use
             fnt: smallFont,
             // Whether to automatically wrap the text or not
@@ -252,6 +288,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the label element to the main frame.
         FirstAnswer.Pack (mainFrame);
 		
+		// ----------------------------------------------------------------------------
 		SecondAnswer = new ('Samples_ZF_Label').Init
         (
             // Position
@@ -259,7 +296,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
-            text: string.Format("%d ",random[ss](1,10)),
+            text: string.Format("%d ",Second),
             // The font to use
             fnt: smallFont,
             // Whether to automatically wrap the text or not
@@ -274,6 +311,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the label element to the main frame.
         SecondAnswer.Pack (mainFrame);
 		
+		// ----------------------------------------------------------------------------
 		ThirdAnswer = new ('Samples_ZF_Label').Init
         (
             // Position
@@ -281,7 +319,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
-            text: string.Format("%d ",random[ss](1,10)),
+            text: string.Format("%d ",Third),
             // The font to use
             fnt: smallFont,
             // Whether to automatically wrap the text or not
