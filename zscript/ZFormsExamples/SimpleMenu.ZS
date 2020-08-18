@@ -1,9 +1,9 @@
 /*
- * SimpleMenu.ZS:
- * This example shows how to make a simple menu with a background, a text label,
- * and a single-texture button.
- * Clicking the button changes the colour of the text label's text to a random
- * colour.
+ * For all god that is saint, If you can get easily offended don't look further!
+ * For all god that is saint, If you can get easily offended don't look further!
+ * For all god that is saint, If you can get easily offended don't look further!
+ * For all god that is saint, If you can get easily offended don't look further!
+ * For all god that is saint, If you can get easily offended don't look further!
 */
 
 // The menu's command handler.
@@ -16,29 +16,29 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 
     override void buttonClickCommand (Samples_ZF_Button caller, string command)
     {
-        // If the command is "aButton"...
-        if (command == "FirstButton")
+        // First buttons in a line
+        if (command == "fFirstButton")
         {
             // Change the text's colour to a random colour.
-            link.FirstButton.disabled = true;
-			link.SecondButton.disabled = false;
-			link.ThirdButton.disabled = false;
+            link.fFirstButton.disabled = true;
+			link.fSecondButton.disabled = false;
+			link.fThirdButton.disabled = false;
         }
 		
-		if (command == "SecondButton")
+		if (command == "fSecondButton")
         {
             // Change the text's colour to a random colour.
-            link.FirstButton.disabled = false;
-			link.SecondButton.disabled = true;
-			link.ThirdButton.disabled = false;
+            link.fFirstButton.disabled = false;
+			link.fSecondButton.disabled = true;
+			link.fThirdButton.disabled = false;
         }
 		
-		if (command == "ThirdButton")
+		if (command == "fThirdButton")
         {
             // Change the text's colour to a random colour.
-            link.FirstButton.disabled = false;
-			link.SecondButton.disabled = false;
-			link.ThirdButton.disabled = true;
+            link.fFirstButton.disabled = false;
+			link.fSecondButton.disabled = false;
+			link.fThirdButton.disabled = true;
         }
 		
 		if (command == "ConfirmButton")
@@ -60,24 +60,59 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 
     // A background image.
     Samples_ZF_Image background;
-    // A simple single-texture button.
-    Samples_ZF_Button FirstButton;
-	Samples_ZF_Button SecondButton;
-	Samples_ZF_Button ThirdButton;
+	
+    // First buttons
+    Samples_ZF_Button fFirstButton;
+	Samples_ZF_Button fSecondButton;
+	Samples_ZF_Button fThirdButton;
+    // First answers + the Question (they are next to the buttons)
+	Samples_ZF_Label fQuestion;
+    Samples_ZF_Label fFirstAnswer;
+	Samples_ZF_Label fSecondAnswer;
+	Samples_ZF_Label fThirdAnswer;
+	
+	
+	// Third buttons
+    Samples_ZF_Button tFirstButton;
+	Samples_ZF_Button tSecondButton;
+	Samples_ZF_Button tThirdButton;
+    // Third answers + the Question
+	Samples_ZF_Label tQuestion;
+	Samples_ZF_Label tQuestion2;
+    Samples_ZF_Label tFirstAnswer;
+	Samples_ZF_Label tSecondAnswer;
+	Samples_ZF_Label tThirdAnswer;
+	Samples_ZF_Label tFirstAnswer2;
+	Samples_ZF_Label tSecondAnswer2;
+	Samples_ZF_Label tThirdAnswer2;
+	
 	Samples_ZF_Button ConfirmButton;
-    // A text label.
-	Samples_ZF_Label Question;
-    Samples_ZF_Label FirstAnswer;
-	Samples_ZF_Label SecondAnswer;
-	Samples_ZF_Label ThirdAnswer;
 	
 	int FirstCorrect;
 	int fFirst;
 	int fSecond;
 	int sFirst, sSecond;
 	
+	int ThirdCorrect;
+	int tFirst, tSecond;
+	
 	int CorrectButton;
-
+	
+	override void MenuEvent (int mkey, bool fromcontroller)
+	{
+		switch (mkey)
+		{
+			case MKEY_UP:
+				break;
+			case MKEY_DOWN:
+				break;
+			case MKEY_RIGHT:
+				break;
+			case MKEY_LEFT:
+				break;
+		}
+	}
+	
     override void Init (Menu parent)
     {
         // Call GenericMenu's 'Init' function to do some required initialization.
@@ -109,7 +144,88 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         background.Pack (mainFrame);
 
         // ----------------------------------------------------------------------------
-        FirstButton = new ('Samples_ZF_Button').Init
+        fFirstButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. - 270.) / 2., (200. - 125.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "fFirstButton"
+        );
+        // Set the button's textures.
+        fFirstButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+        // Add the button element into the main frame.
+        fFirstButton.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+        fSecondButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. - 125.) / 2., (200. - 125.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "fSecondButton"
+        );
+        // Set the button's textures.
+        fSecondButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+        // Add the button element into the main frame.
+        fSecondButton.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+        fThirdButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. + 20.) / 2., (200. - 125.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "fThirdButton"
+        );
+        // Set the button's textures.
+        fThirdButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+        // Add the button element into the main frame.
+        fThirdButton.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+        tFirstButton = new ('Samples_ZF_Button').Init
         (
             // Position
             ((320. - 270.) / 2., (200. + 125.) / 2. ),
@@ -118,10 +234,10 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Our command handler
             cmdHandler: handler,
             // A command string for the button
-            command: "FirstButton"
+            command: "tFirstButton"
         );
         // Set the button's textures.
-        FirstButton.SetTexture
+        tFirstButton.SetTexture
         (
             // Idle/inactive
             "graphics/ZFormsExamples/SmallButtonIdle.png",
@@ -133,10 +249,10 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             "graphics/ZFormsExamples/SmallButtonDisabled.png"
         );
         // Add the button element into the main frame.
-        FirstButton.Pack (mainFrame);
+        tFirstButton.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
-        SecondButton = new ('Samples_ZF_Button').Init
+        tSecondButton = new ('Samples_ZF_Button').Init
         (
             // Position
             ((320. - 125.) / 2., (200. + 125.) / 2. ),
@@ -145,10 +261,10 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Our command handler
             cmdHandler: handler,
             // A command string for the button
-            command: "SecondButton"
+            command: "tSecondButton"
         );
         // Set the button's textures.
-        SecondButton.SetTexture
+        tSecondButton.SetTexture
         (
             // Idle/inactive
             "graphics/ZFormsExamples/SmallButtonIdle.png",
@@ -160,10 +276,10 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             "graphics/ZFormsExamples/SmallButtonDisabled.png"
         );
         // Add the button element into the main frame.
-        SecondButton.Pack (mainFrame);
+        tSecondButton.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
-        ThirdButton = new ('Samples_ZF_Button').Init
+        tThirdButton = new ('Samples_ZF_Button').Init
         (
             // Position
             ((320. + 20.) / 2., (200. + 125.) / 2. ),
@@ -172,10 +288,10 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Our command handler
             cmdHandler: handler,
             // A command string for the button
-            command: "ThirdButton"
+            command: "tThirdButton"
         );
         // Set the button's textures.
-        ThirdButton.SetTexture
+        tThirdButton.SetTexture
         (
             // Idle/inactive
             "graphics/ZFormsExamples/SmallButtonIdle.png",
@@ -187,7 +303,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             "graphics/ZFormsExamples/SmallButtonDisabled.png"
         );
         // Add the button element into the main frame.
-        ThirdButton.Pack (mainFrame);
+        tThirdButton.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
         ConfirmButton = new ('Samples_ZF_Button').Init
@@ -225,7 +341,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		FirstCorrect = fFirst + fSecond;
 		CorrectButton = random(1,3);
 		
-		Question = new ('Samples_ZF_Label').Init
+		fQuestion = new ('Samples_ZF_Label').Init
         (
             // Position
             (0,15),
@@ -243,7 +359,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             textColor: Font.CR_WHITE
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
-        Question.box.pos.X = 85;
+        fQuestion.box.pos.X = 85;
 		
 		// ----------------------------------------------------------------------------
 		
@@ -261,15 +377,15 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 				break;
 		}
 		
+		// Fill out empty answers with random gibberish
 		if (First == 0) First = random[sf](1,50); + random[sg](1,50);
 		if (Second == 0) Second = random[sf](1,50); + random[sg](1,50);
 		if (Third == 0) Third = random[sf](1,50); + random[sg](1,50);
 		
-		
-        FirstAnswer = new ('Samples_ZF_Label').Init
+        fFirstAnswer = new ('Samples_ZF_Label').Init
         (
             // Position
-            (0,163),
+            (0, 38),
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
@@ -284,15 +400,15 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             textColor: Font.CR_WHITE
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
-        FirstAnswer.box.pos.X = 50;
+        fFirstAnswer.box.pos.X = 50;
         // Add the label element to the main frame.
-        FirstAnswer.Pack (mainFrame);
+        fFirstAnswer.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
-		SecondAnswer = new ('Samples_ZF_Label').Init
+		fSecondAnswer = new ('Samples_ZF_Label').Init
         (
             // Position
-            (0,163),
+            (0,38),
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
@@ -307,15 +423,15 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             textColor: Font.CR_WHITE
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
-        SecondAnswer.box.pos.X = 125;
+        fSecondAnswer.box.pos.X = 125;
         // Add the label element to the main frame.
-        SecondAnswer.Pack (mainFrame);
+        fSecondAnswer.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
-		ThirdAnswer = new ('Samples_ZF_Label').Init
+		fThirdAnswer = new ('Samples_ZF_Label').Init
         (
             // Position
-            (0,163),
+            (0,38),
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
@@ -330,10 +446,232 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             textColor: Font.CR_WHITE
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
-        ThirdAnswer.box.pos.X = 200;
+        fThirdAnswer.box.pos.X = 200;
         // Add the label element to the main frame.
-        ThirdAnswer.Pack (mainFrame);
+        fThirdAnswer.Pack (mainFrame);
 		
-		Question.Pack (mainFrame);
+		// ------------------------------ Third Answers and Question
+		
+		static const string ThirdList[] =
+		{
+			"KvZPAm6YSF3htJ3kyP4R",
+			"KlW3svMtaCPSUBjMojzX",
+			"FoftZSNaFyvpsBoBaoBy",
+			"TSW9vSlUL02zldlP1FlB",
+			"z8Z1HNTk9dK5Z1oiePtM",
+			"CpyesrA3TDfm8G7bpTWE",
+			"ewjRPfXge6o4XRs9Z52e",
+			"IIyMenccxAXujzAylbCa",
+			"HBvYEFQCklFQEn1jytzf",
+			"HXTBGsxqPofQTc4k40o6"
+		};
+		
+		int i = random[rancorrupt](0,ThirdList.Size()-1);
+		tQuestion = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,140),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("What is %s", ThirdList[i]),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        tQuestion.box.pos.X = 85;
+		
+		i = random[rancorrupt](0,ThirdList.Size()-1);
+		tQuestion2 = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,139),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("ofQTc4k4%s", ThirdList[i]),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        tQuestion2.box.pos.X = 90;
+		
+		static const string CorruptedList[] =
+		{
+			",",
+			".,m.",
+			"á",
+			"nul",
+			".exe",
+			"VM",
+			";;;",
+			"eror",
+			" . . .",
+			"xcyvb",
+			"€$ß",
+			"rm -rf",
+			"del",
+			"excxx",
+			"gzdum",
+			"help",
+			"? ?",
+			"iddqd"
+		};
+		
+		i = random[rancorrupt](0,CorruptedList.Size()-1);
+		tFirstAnswer = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0, 163),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%s ",CorruptedList[i]),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        tFirstAnswer.box.pos.X = 50;
+        // Add the label element to the main frame.
+        tFirstAnswer.Pack (mainFrame);
+		
+		i = random[rancorrupt](0,CorruptedList.Size()-1);
+		tFirstAnswer2 = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0, 162),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%s ",CorruptedList[i]),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        tFirstAnswer2.box.pos.X = 51;
+        // Add the label element to the main frame.
+        tFirstAnswer2.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+		i = random[rancorruptt](0,CorruptedList.Size()-1);
+		tSecondAnswer = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,163),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%s ",CorruptedList[i]),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        tSecondAnswer.box.pos.X = 125;
+        // Add the label element to the main frame.
+        tSecondAnswer.Pack (mainFrame);
+		
+		i = random[rancorruptt](0,CorruptedList.Size()-1);
+		tSecondAnswer2 = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,162),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%s ",CorruptedList[i]),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        tSecondAnswer2.box.pos.X = 126;
+        // Add the label element to the main frame.
+        tSecondAnswer2.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+		i = random[rancorrupttt](0,CorruptedList.Size()-1);
+		tThirdAnswer = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,163),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%s ",CorruptedList[i]),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        tThirdAnswer.box.pos.X = 200;
+        // Add the label element to the main frame.
+        tThirdAnswer.Pack (mainFrame);
+		
+		i = random[rancorrupttt](0,CorruptedList.Size()-1);
+		tThirdAnswer2 = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,162),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%s ",CorruptedList[i]),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        tThirdAnswer2.box.pos.X = 201;
+        // Add the label element to the main frame.
+        tThirdAnswer2.Pack (mainFrame);
+		
+		fQuestion.Pack (mainFrame);
+		tQuestion.Pack (mainFrame);
+		tQuestion2.Pack (mainFrame);
     }
 }
