@@ -168,34 +168,106 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 	int CorrectButton;
 	
 	int BasicsRow, BasicsActive;
+	bool BasicsConfirm;
+	
 	bool FirstConfirm, SecondConfirm, ThirdConfirm;
 	
 	// Please don't put me in jail
 	override void BasicsKeyboard()
 	{
-		// First Buttons
-		if (BasicsRow == 1 && BasicsActive == 1)
-			fFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
-		if (BasicsRow == 1 && BasicsActive == 2)
-			fSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
-		if (BasicsRow == 1 && BasicsActive == 3)
-			fThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
-		
-		// Second Buttons
-		if (BasicsRow == 2 && BasicsActive == 1)
-			sFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
-		if (BasicsRow == 2 && BasicsActive == 2)
-			sSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
-		if (BasicsRow == 2 && BasicsActive == 3)
-			sThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
-		
-		// Third Buttons
-		if (BasicsRow == 3 && BasicsActive == 1)
-			tFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
-		if (BasicsRow == 3 && BasicsActive == 2)
-			tSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
-		if (BasicsRow == 3 && BasicsActive == 3)
-			tThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		switch (BasicsRow)
+		{
+			// First Line
+			case 1:
+				switch (BasicsActive)
+				{
+					case 1:
+						fFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "fFirstButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+					case 2:
+						fSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "fSecondButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+					case 3:
+						fThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "fThirdButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+				}
+			break;
+			// Second line
+			case 2:
+				switch (BasicsActive)
+				{
+					case 1:
+						sFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "sFirstButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+					case 2:
+						sSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "sSecondButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+					case 3:
+						sThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "sThirdButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+				}
+			break;
+			// Third line (the corruption mess)
+			case 3:
+				switch (BasicsActive)
+				{
+					case 1:
+						tFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "tFirstButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+					case 2:
+						tSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "tSecondButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+					case 3:
+						tThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+						if (BasicsConfirm)
+						{
+							handler.buttonClickCommand(ActiveButton, "tThirdButton"); 
+							BasicsConfirm = false;
+						}
+						break;
+				}
+			break;
+		}
 		
 		if (FirstConfirm && SecondConfirm && ThirdConfirm)
 			Close();
@@ -246,6 +318,12 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 				BasicsActive -= 1;
 			else
 				BasicsActive += 1;
+		}
+		
+		if (mkey == MKEY_ENTER)
+		{
+			ActiveButton = fFirstButton;
+			BasicsConfirm = true;
 		}
 		
 		return true;
