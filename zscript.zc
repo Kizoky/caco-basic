@@ -1,5 +1,12 @@
 version "4.1.3"
 
+// ZForms
+#include "ZScript/ZFormsExamples/ZForms/Include.ZSC"
+
+/** Examples **/
+// A simple example menu
+#include "ZScript/ZFormsExamples/SimpleMenu.ZS"
+
 #include "zscript/enemy/CacoBasic.Caco.txt"
 #include "zscript/enemy/CacoBasic.MrDoot.txt"
 #include "zscript/enemy/CacoBasic.PrincipalOfSin.txt"
