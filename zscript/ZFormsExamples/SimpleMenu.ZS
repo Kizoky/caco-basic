@@ -8,15 +8,20 @@
 
 // The menu's command handler.
 // This is needed so we can make our menu interactable.
+
 class Samples_SimpleMenuHandler : Samples_ZF_Handler
 {
     // The menu this command handler belongs to.
     // We need this to be able to do anything with our menu.
     CacoBasics_Math link;
-
+	
+	/* I will deal with this when I know where to override this
+	
+	*/
+	
     override void buttonClickCommand (Samples_ZF_Button caller, string command)
     {
-        // First buttons in a line
+        // -------------------------------------------------- First buttons in a line
         if (command == "fFirstButton")
         {
             // Change the text's colour to a random colour.
@@ -24,7 +29,6 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 			link.fSecondButton.disabled = false;
 			link.fThirdButton.disabled = false;
         }
-		
 		if (command == "fSecondButton")
         {
             // Change the text's colour to a random colour.
@@ -32,13 +36,58 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 			link.fSecondButton.disabled = true;
 			link.fThirdButton.disabled = false;
         }
-		
 		if (command == "fThirdButton")
         {
             // Change the text's colour to a random colour.
             link.fFirstButton.disabled = false;
 			link.fSecondButton.disabled = false;
 			link.fThirdButton.disabled = true;
+        }
+		
+		// ------------------------------------------------- Second buttons in a line
+		if (command == "sFirstButton")
+        {
+            // Change the text's colour to a random colour.
+            link.sFirstButton.disabled = true;
+			link.sSecondButton.disabled = false;
+			link.sThirdButton.disabled = false;
+        }
+		if (command == "sSecondButton")
+        {
+            // Change the text's colour to a random colour.
+            link.sFirstButton.disabled = false;
+			link.sSecondButton.disabled = true;
+			link.sThirdButton.disabled = false;
+        }
+		if (command == "sThirdButton")
+        {
+            // Change the text's colour to a random colour.
+            link.sFirstButton.disabled = false;
+			link.sSecondButton.disabled = false;
+			link.sThirdButton.disabled = true;
+        }
+		
+		// ------------------------------------------------- Third buttons in a line
+		if (command == "tFirstButton")
+        {
+            // Change the text's colour to a random colour.
+            link.tFirstButton.disabled = true;
+			link.tSecondButton.disabled = false;
+			link.tThirdButton.disabled = false;
+        }
+		if (command == "tSecondButton")
+        {
+            // Change the text's colour to a random colour.
+            link.tFirstButton.disabled = false;
+			link.tSecondButton.disabled = true;
+			link.tThirdButton.disabled = false;
+        }
+		if (command == "tThirdButton")
+        {
+            // Change the text's colour to a random colour.
+            link.tFirstButton.disabled = false;
+			link.tSecondButton.disabled = false;
+			link.tThirdButton.disabled = true;
         }
 		
 		if (command == "ConfirmButton")
@@ -71,12 +120,22 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 	Samples_ZF_Label fSecondAnswer;
 	Samples_ZF_Label fThirdAnswer;
 	
+	// Second buttons
+    Samples_ZF_Button sFirstButton;
+	Samples_ZF_Button sSecondButton;
+	Samples_ZF_Button sThirdButton;
+    // First answers + the Question (they are next to the buttons)
+	Samples_ZF_Label sQuestion;
+    Samples_ZF_Label sFirstAnswer;
+	Samples_ZF_Label sSecondAnswer;
+	Samples_ZF_Label sThirdAnswer;
+	
 	
 	// Third buttons
     Samples_ZF_Button tFirstButton;
 	Samples_ZF_Button tSecondButton;
 	Samples_ZF_Button tThirdButton;
-    // Third answers + the Question
+    // Third answers + the Question ... or whatever they are supposed to be
 	Samples_ZF_Label tQuestion;
 	Samples_ZF_Label tQuestion2;
     Samples_ZF_Label tFirstAnswer;
@@ -91,6 +150,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 	int FirstCorrect;
 	int fFirst;
 	int fSecond;
+	int SecondCorrect;
 	int sFirst, sSecond;
 	
 	int ThirdCorrect;
@@ -98,19 +158,84 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 	
 	int CorrectButton;
 	
-	override void MenuEvent (int mkey, bool fromcontroller)
+	int BasicsRow, BasicsActive;
+	
+	// Please don't put me in jail
+	override void BasicsKeyboard()
 	{
-		switch (mkey)
+		// First Buttons
+		if (BasicsRow == 1 && BasicsActive == 1)
+			fFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		if (BasicsRow == 1 && BasicsActive == 2)
+			fSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		if (BasicsRow == 1 && BasicsActive == 3)
+			fThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		
+		// Second Buttons
+		if (BasicsRow == 2 && BasicsActive == 1)
+			sFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		if (BasicsRow == 2 && BasicsActive == 2)
+			sSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		if (BasicsRow == 2 && BasicsActive == 3)
+			sThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		
+		// Third Buttons
+		if (BasicsRow == 3 && BasicsActive == 1)
+			tFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		if (BasicsRow == 3 && BasicsActive == 2)
+			tSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		if (BasicsRow == 3 && BasicsActive == 3)
+			tThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
+		
+		Console.Printf("Row: %d | Active: %d", BasicsRow, BasicsActive);
+		
+		Super.BasicsKeyboard();
+	
+	}
+	
+	// Note: BasicsRow and BasicsActive are 0 by default
+	// Therefore they won't highlight any buttons by default, unless they start pushing any movement buttons
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{	
+		if (mkey == MKEY_UP)
 		{
-			case MKEY_UP:
-				break;
-			case MKEY_DOWN:
-				break;
-			case MKEY_RIGHT:
-				break;
-			case MKEY_LEFT:
-				break;
+			if (BasicsRow == 1)
+				return Super.MenuEvent(mkey, fromcontroller);
+			
+			if (BasicsRow > 1)
+				BasicsRow -= 1;
+			else
+				BasicsRow += 1;
 		}
+		
+		if (mkey == MKEY_DOWN)
+		{
+			if (BasicsRow == 3)
+				return Super.MenuEvent(mkey, fromcontroller);
+			
+			BasicsRow += 1;
+		}
+		
+		if (mkey == MKEY_RIGHT)
+		{
+			if (BasicsActive == 3)
+				return Super.MenuEvent(mkey, fromcontroller);
+			
+			BasicsActive += 1;
+		}
+		
+		if (mkey == MKEY_LEFT)
+		{
+			if (BasicsActive == 1)
+				return Super.MenuEvent(mkey, fromcontroller);
+			
+			if (BasicsActive > 1)
+				BasicsActive -= 1;
+			else
+				BasicsActive += 1;
+		}
+		
+		return true;
 	}
 	
     override void Init (Menu parent)
@@ -119,6 +244,9 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         Super.Init (parent);
         // Set our base resolution to 320x200.
         SetBaseResolution ((320, 200));
+		
+		//BasicsRow = 0;
+		//BasicsActive = 0;
 		
         // Get GZDoom's new options menu smallfont.
         smallFont = OptionFont ();
@@ -223,6 +351,86 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Add the button element into the main frame.
         fThirdButton.Pack (mainFrame);
+		
+		sFirstButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. - 270.) / 2., (200. - 0.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "sFirstButton"
+        );
+        // Set the button's textures.
+        sFirstButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+        // Add the button element into the main frame.
+        sFirstButton.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+        sSecondButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. - 125.) / 2., (200. - 0.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "sSecondButton"
+        );
+        // Set the button's textures.
+        sSecondButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+        // Add the button element into the main frame.
+        sSecondButton.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+        sThirdButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. + 20.) / 2., (200. - 0.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "sThirdButton"
+        );
+        // Set the button's textures.
+        sThirdButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+        // Add the button element into the main frame.
+        sThirdButton.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
         tFirstButton = new ('Samples_ZF_Button').Init
@@ -450,6 +658,124 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the label element to the main frame.
         fThirdAnswer.Pack (mainFrame);
 		
+		// ------------------------------------------------------------- Second Answers and Question
+		
+		First = 0;
+		Second = 0;
+		Third = 0;
+		
+		sFirst = random[ssr](1,50);
+		sSecond = random[sdt](1,50);
+		SecondCorrect = sFirst + sSecond;
+		CorrectButton = random[crctbtn](1,3);
+		
+		sQuestion = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,77),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("What is %d + %d ? ",sFirst, sSecond),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        sQuestion.box.pos.X = 85;
+		
+		switch (CorrectButton)
+		{
+			case 1:
+				First = SecondCorrect;
+				break;
+			case 2:
+				Second = SecondCorrect;
+				break;
+			case 3:
+				Third = SecondCorrect;
+				break;
+		}
+		
+		if (First == 0) First = random[sfrr](1,60); + random[sgl](1,40);
+		if (Second == 0) Second = random[sftt](1,30); + random[sgr](1,70);
+		if (Third == 0) Third = random[sfzz](1,70); + random[sgt](1,20);
+		
+		sFirstAnswer = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0, 100),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%d ",First),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        sFirstAnswer.box.pos.X = 50;
+        // Add the label element to the main frame.
+        sFirstAnswer.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+		sSecondAnswer = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,100),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%d ",Second),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        sSecondAnswer.box.pos.X = 125;
+        // Add the label element to the main frame.
+        sSecondAnswer.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+		sThirdAnswer = new ('Samples_ZF_Label').Init
+        (
+            // Position
+            (0,100),
+            // Size.
+            (0, smallFont.GetHeight ()),
+            // The label's text
+            text: string.Format("%d ",Third),
+            // The font to use
+            fnt: smallFont,
+            // Whether to automatically wrap the text or not
+            wrap: false,
+            // Whether to automatically resize the element based on the text width
+            autoSize: true,
+            // The text's colour
+            textColor: Font.CR_WHITE
+        );
+        // Calculate the horizontal position for the label so that it's centered on the screen.
+        sThirdAnswer.box.pos.X = 200;
+        // Add the label element to the main frame.
+        sThirdAnswer.Pack (mainFrame);
+		
+		// ----------------------------------------------------------------------------
+		
 		// ------------------------------ Third Answers and Question
 		
 		static const string ThirdList[] =
@@ -671,6 +997,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         tThirdAnswer2.Pack (mainFrame);
 		
 		fQuestion.Pack (mainFrame);
+		sQuestion.Pack (mainFrame);
 		tQuestion.Pack (mainFrame);
 		tQuestion2.Pack (mainFrame);
     }

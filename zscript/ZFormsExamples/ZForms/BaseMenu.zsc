@@ -16,7 +16,12 @@ class Samples_ZF_GenericMenu : GenericMenu {
 		mainFrame.setBox((0, 0), size);
 		mainFrame.setBaseResolution(size);
 	}
-
+	
+	virtual void BasicsKeyboard()
+	{
+		
+	}
+	
 	override void ticker() {
 		// Trigger a mouse movement UI event to fix things "sticking" sometimes
 		let zfEv = new("Samples_ZF_UiEvent");
@@ -27,6 +32,7 @@ class Samples_ZF_GenericMenu : GenericMenu {
 
 		Super.ticker();
 		mainFrame.ticker();
+		BasicsKeyboard();
 	}
 
 	override void drawer() {
