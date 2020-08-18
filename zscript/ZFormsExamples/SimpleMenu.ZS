@@ -40,6 +40,12 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 			link.SecondButton.disabled = false;
 			link.ThirdButton.disabled = true;
         }
+		
+		if (command == "ConfirmButton")
+        {
+            // Change the text's colour to a random colour.
+            link.Close();
+        }
     }
 }
 
@@ -175,6 +181,33 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Add the button element into the main frame.
         ThirdButton.Pack (mainFrame);
+		
+		// Add a button.
+        ConfirmButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. + 250.) / 2., (200. + 125.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "ConfirmButton"
+        );
+        // Set the button's textures.
+        ConfirmButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+        // Add the button element into the main frame.
+        ConfirmButton.Pack (mainFrame);
 
         // Add a label.
 		Question = new ('Samples_ZF_Label').Init
