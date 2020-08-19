@@ -198,6 +198,9 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 	
 	bool FirstConfirm, SecondConfirm, ThirdConfirm;
 	
+	bool CountdowntoClose;
+	int CountdowntoClosing, Ticktack;
+	
 	// Please don't put me in jail
 	override void BasicsKeyboard()
 	{
@@ -315,8 +318,16 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		
 		if (FirstConfirm && SecondConfirm && ThirdConfirm)
 		{
+			if (!CountdowntoClose)
+			{
+				CountdowntoClosing = 35 * 4;
+				CountdowntoClose = true;
+			}
 			S_ChangeMusic("");
-			Close();
+			Ticktack += 1;
+			
+			if (CountdowntoClosing < Ticktack && CountdowntoClose)
+				Close();
 		}
 		
 		// Make these appear when Player answered
