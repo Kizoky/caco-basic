@@ -270,7 +270,10 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		}
 		
 		if (FirstConfirm && SecondConfirm && ThirdConfirm)
+		{
+			S_ChangeMusic("");
 			Close();
+		}
 		
 		Console.Printf("Row: %d | Active: %d", BasicsRow, BasicsActive);
 		
@@ -335,6 +338,10 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         Super.Init (parent);
         // Set our base resolution to 320x200.
         SetBaseResolution ((320, 200));
+		//let player = players [consoleplayer].mo;
+		//if (player)
+			//player.SetMusic("D_MATH");
+		S_ChangeMusic("D_MATH");
 		
 		//BasicsRow = 0;
 		//BasicsActive = 0;
