@@ -56,28 +56,42 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
         }
 		
 		// ------------------------------------------------- Second buttons in a line
+		//--------------------------------------------------
+		//----------------------------------------------------------------------------
 		if (command == "sFirstButton")
         {
-            // Change the text's colour to a random colour.
+            if (link.sCorrectButton == link.sFirstButton)
+				link.sFirstAnswer.textColor = Font.CR_GREEN;
+			else
+				link.sFirstAnswer.textColor = Font.CR_RED;
+			
 			link.SecondConfirm = true;
             link.sFirstButton.disabled = true;
-			link.sSecondButton.disabled = false;
-			link.sThirdButton.disabled = false;
+			link.sSecondButton.disabled = true;
+			link.sThirdButton.disabled = true;
         }
 		if (command == "sSecondButton")
         {
-            // Change the text's colour to a random colour.
+            if (link.sCorrectButton == link.sSecondButton)
+				link.sSecondAnswer.textColor = Font.CR_GREEN;
+			else
+				link.sSecondAnswer.textColor = Font.CR_RED;
+			
 			link.SecondConfirm = true;
-            link.sFirstButton.disabled = false;
+            link.sFirstButton.disabled = true;
 			link.sSecondButton.disabled = true;
-			link.sThirdButton.disabled = false;
+			link.sThirdButton.disabled = true;
         }
 		if (command == "sThirdButton")
         {
-            // Change the text's colour to a random colour.
+            if (link.sCorrectButton == link.sThirdButton)
+				link.sThirdAnswer.textColor = Font.CR_GREEN;
+			else
+				link.sThirdAnswer.textColor = Font.CR_RED;
+			
 			link.SecondConfirm = true;
-            link.sFirstButton.disabled = false;
-			link.sSecondButton.disabled = false;
+            link.sFirstButton.disabled = true;
+			link.sSecondButton.disabled = true;
 			link.sThirdButton.disabled = true;
         }
 		
@@ -305,6 +319,40 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 			Close();
 		}
 		
+		// Make these appear when Player answered
+		if (FirstConfirm && !SecondConfirm)
+		{
+			sFirstButton.Pack (mainFrame);
+			sSecondButton.Pack (mainFrame);
+			sThirdButton.Pack (mainFrame);
+			
+			sFirstAnswer.Pack (mainFrame);
+			sSecondAnswer.Pack (mainFrame);
+			sThirdAnswer.Pack (mainFrame);
+			
+			sQuestion.Pack (mainFrame);
+		}
+		
+		if (SecondConfirm)
+		{
+			tFirstButton.Pack (mainFrame);
+			tSecondButton.Pack (mainFrame);
+			tThirdButton.Pack (mainFrame);
+			
+			tFirstAnswer.Pack (mainFrame);
+			tFirstAnswer2.Pack (mainFrame);
+			
+			tSecondAnswer.Pack (mainFrame);
+			tSecondAnswer2.Pack (mainFrame);
+			
+			tThirdAnswer.Pack (mainFrame);
+			tThirdAnswer2.Pack (mainFrame);
+			
+			tQuestion.Pack (mainFrame);
+			tQuestion2.Pack (mainFrame);
+		
+		}
+		
 		//Console.Printf("Row: %d | Active: %d", BasicsRow, BasicsActive);
 		
 		Super.BasicsKeyboard();
@@ -480,171 +528,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the button element into the main frame.
         fThirdButton.Pack (mainFrame);
 		
-		
-		
-		sFirstButton = new ('Samples_ZF_Button').Init
-        (
-            // Position
-            ((320. - 270.) / 2., (200. - 0.) / 2. ),
-            // Size
-            (18, 18),
-            // Our command handler
-            cmdHandler: handler,
-            // A command string for the button
-            command: "sFirstButton"
-        );
-        // Set the button's textures.
-        sFirstButton.SetTexture
-        (
-            // Idle/inactive
-            "graphics/ZFormsExamples/SmallButtonIdle.png",
-            // Hovered
-            "graphics/ZFormsExamples/SmallButtonHovered.png",
-            // Clicked/pressed
-            "graphics/ZFormsExamples/SmallButtonClicked.png",
-            // Disabled
-            "graphics/ZFormsExamples/SmallButtonDisabled.png"
-        );
-        // Add the button element into the main frame.
-        sFirstButton.Pack (mainFrame);
-		
-		// ----------------------------------------------------------------------------
-        sSecondButton = new ('Samples_ZF_Button').Init
-        (
-            // Position
-            ((320. - 125.) / 2., (200. - 0.) / 2. ),
-            // Size
-            (18, 18),
-            // Our command handler
-            cmdHandler: handler,
-            // A command string for the button
-            command: "sSecondButton"
-        );
-        // Set the button's textures.
-        sSecondButton.SetTexture
-        (
-            // Idle/inactive
-            "graphics/ZFormsExamples/SmallButtonIdle.png",
-            // Hovered
-            "graphics/ZFormsExamples/SmallButtonHovered.png",
-            // Clicked/pressed
-            "graphics/ZFormsExamples/SmallButtonClicked.png",
-            // Disabled
-            "graphics/ZFormsExamples/SmallButtonDisabled.png"
-        );
-        // Add the button element into the main frame.
-        sSecondButton.Pack (mainFrame);
-		
-		// ----------------------------------------------------------------------------
-        sThirdButton = new ('Samples_ZF_Button').Init
-        (
-            // Position
-            ((320. + 20.) / 2., (200. - 0.) / 2. ),
-            // Size
-            (18, 18),
-            // Our command handler
-            cmdHandler: handler,
-            // A command string for the button
-            command: "sThirdButton"
-        );
-        // Set the button's textures.
-        sThirdButton.SetTexture
-        (
-            // Idle/inactive
-            "graphics/ZFormsExamples/SmallButtonIdle.png",
-            // Hovered
-            "graphics/ZFormsExamples/SmallButtonHovered.png",
-            // Clicked/pressed
-            "graphics/ZFormsExamples/SmallButtonClicked.png",
-            // Disabled
-            "graphics/ZFormsExamples/SmallButtonDisabled.png"
-        );
-        // Add the button element into the main frame.
-        sThirdButton.Pack (mainFrame);
-		
-		// ----------------------------------------------------------------------------
-        tFirstButton = new ('Samples_ZF_Button').Init
-        (
-            // Position
-            ((320. - 270.) / 2., (200. + 125.) / 2. ),
-            // Size
-            (18, 18),
-            // Our command handler
-            cmdHandler: handler,
-            // A command string for the button
-            command: "tFirstButton"
-        );
-        // Set the button's textures.
-        tFirstButton.SetTexture
-        (
-            // Idle/inactive
-            "graphics/ZFormsExamples/SmallButtonIdle.png",
-            // Hovered
-            "graphics/ZFormsExamples/SmallButtonHovered.png",
-            // Clicked/pressed
-            "graphics/ZFormsExamples/SmallButtonClicked.png",
-            // Disabled
-            "graphics/ZFormsExamples/SmallButtonDisabled.png"
-        );
-        // Add the button element into the main frame.
-        tFirstButton.Pack (mainFrame);
-		
-		// ----------------------------------------------------------------------------
-        tSecondButton = new ('Samples_ZF_Button').Init
-        (
-            // Position
-            ((320. - 125.) / 2., (200. + 125.) / 2. ),
-            // Size
-            (18, 18),
-            // Our command handler
-            cmdHandler: handler,
-            // A command string for the button
-            command: "tSecondButton"
-        );
-        // Set the button's textures.
-        tSecondButton.SetTexture
-        (
-            // Idle/inactive
-            "graphics/ZFormsExamples/SmallButtonIdle.png",
-            // Hovered
-            "graphics/ZFormsExamples/SmallButtonHovered.png",
-            // Clicked/pressed
-            "graphics/ZFormsExamples/SmallButtonClicked.png",
-            // Disabled
-            "graphics/ZFormsExamples/SmallButtonDisabled.png"
-        );
-        // Add the button element into the main frame.
-        tSecondButton.Pack (mainFrame);
-		
-		// ----------------------------------------------------------------------------
-        tThirdButton = new ('Samples_ZF_Button').Init
-        (
-            // Position
-            ((320. + 20.) / 2., (200. + 125.) / 2. ),
-            // Size
-            (18, 18),
-            // Our command handler
-            cmdHandler: handler,
-            // A command string for the button
-            command: "tThirdButton"
-        );
-        // Set the button's textures.
-        tThirdButton.SetTexture
-        (
-            // Idle/inactive
-            "graphics/ZFormsExamples/SmallButtonIdle.png",
-            // Hovered
-            "graphics/ZFormsExamples/SmallButtonHovered.png",
-            // Clicked/pressed
-            "graphics/ZFormsExamples/SmallButtonClicked.png",
-            // Disabled
-            "graphics/ZFormsExamples/SmallButtonDisabled.png"
-        );
-        // Add the button element into the main frame.
-        tThirdButton.Pack (mainFrame);
-
-        // ----------------------------------------------------------------------------
-		
 		// Caco's Basics
 		
 		fFirst = random[ss](1,50);
@@ -798,6 +681,86 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the label element to the main frame.
         fThirdAnswer.Pack (mainFrame);
 		
+		fQuestion.Pack (mainFrame);
+		
+		// ==========================================================================================
+		// ==========================================================================================
+		// ==========================================================================================
+		
+		sFirstButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. - 270.) / 2., (200. - 0.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "sFirstButton"
+        );
+        // Set the button's textures.
+        sFirstButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+		
+		// ----------------------------------------------------------------------------
+        sSecondButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. - 125.) / 2., (200. - 0.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "sSecondButton"
+        );
+        // Set the button's textures.
+        sSecondButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+		
+		// ----------------------------------------------------------------------------
+        sThirdButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. + 20.) / 2., (200. - 0.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "sThirdButton"
+        );
+        // Set the button's textures.
+        sThirdButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+		
 		// ------------------------------------------------------------- Second Answers and Question
 		
 		sFirst = random[ssr](1,50);
@@ -829,16 +792,19 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		{
 			case 1:
 				First = SecondCorrect;
+				sCorrectButton = sFirstButton;
 				Second = 0;
 				Third = 0;
 				break;
 			case 2:
 				Second = SecondCorrect;
+				sCorrectButton = sSecondButton;
 				First = 0;
 				Third = 0;
 				break;
 			case 3:
 				Third = SecondCorrect;
+				sCorrectButton = sThirdButton;
 				First = 0;
 				Second = 0;
 				break;
@@ -876,7 +842,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 				Third -= frandom[aor](1,4);
 		}
 		
-		
 		sFirstAnswer = new ('Samples_ZF_Label').Init
         (
             // Position
@@ -896,8 +861,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         sFirstAnswer.box.pos.X = 50;
-        // Add the label element to the main frame.
-        sFirstAnswer.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
 		sSecondAnswer = new ('Samples_ZF_Label').Init
@@ -919,8 +882,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         sSecondAnswer.box.pos.X = 125;
-        // Add the label element to the main frame.
-        sSecondAnswer.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
 		sThirdAnswer = new ('Samples_ZF_Label').Init
@@ -942,10 +903,83 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         sThirdAnswer.box.pos.X = 200;
-        // Add the label element to the main frame.
-        sThirdAnswer.Pack (mainFrame);
+		
+		// ================================================================================================
+		// ================================================================================================
+		// ================================================================================================
+        tFirstButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. - 270.) / 2., (200. + 125.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "tFirstButton"
+        );
+        // Set the button's textures.
+        tFirstButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
 		
 		// ----------------------------------------------------------------------------
+        tSecondButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. - 125.) / 2., (200. + 125.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "tSecondButton"
+        );
+        // Set the button's textures.
+        tSecondButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
+		
+		// ----------------------------------------------------------------------------
+        tThirdButton = new ('Samples_ZF_Button').Init
+        (
+            // Position
+            ((320. + 20.) / 2., (200. + 125.) / 2. ),
+            // Size
+            (18, 18),
+            // Our command handler
+            cmdHandler: handler,
+            // A command string for the button
+            command: "tThirdButton"
+        );
+        // Set the button's textures.
+        tThirdButton.SetTexture
+        (
+            // Idle/inactive
+            "graphics/ZFormsExamples/SmallButtonIdle.png",
+            // Hovered
+            "graphics/ZFormsExamples/SmallButtonHovered.png",
+            // Clicked/pressed
+            "graphics/ZFormsExamples/SmallButtonClicked.png",
+            // Disabled
+            "graphics/ZFormsExamples/SmallButtonDisabled.png"
+        );
 		
 		// ------------------------------ Third Answers and Question
 		
@@ -1047,8 +1081,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         tFirstAnswer.box.pos.X = 50;
-        // Add the label element to the main frame.
-        tFirstAnswer.Pack (mainFrame);
 		
 		i = random[rancorrupt](0,CorruptedList.Size()-1);
 		tFirstAnswer2 = new ('Samples_ZF_Label').Init
@@ -1070,8 +1102,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         tFirstAnswer2.box.pos.X = 51;
-        // Add the label element to the main frame.
-        tFirstAnswer2.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
 		i = random[rancorruptt](0,CorruptedList.Size()-1);
@@ -1094,8 +1124,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         tSecondAnswer.box.pos.X = 125;
-        // Add the label element to the main frame.
-        tSecondAnswer.Pack (mainFrame);
 		
 		i = random[rancorruptt](0,CorruptedList.Size()-1);
 		tSecondAnswer2 = new ('Samples_ZF_Label').Init
@@ -1117,8 +1145,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         tSecondAnswer2.box.pos.X = 126;
-        // Add the label element to the main frame.
-        tSecondAnswer2.Pack (mainFrame);
 		
 		// ----------------------------------------------------------------------------
 		i = random[rancorrupttt](0,CorruptedList.Size()-1);
@@ -1141,8 +1167,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         tThirdAnswer.box.pos.X = 200;
-        // Add the label element to the main frame.
-        tThirdAnswer.Pack (mainFrame);
 		
 		i = random[rancorrupttt](0,CorruptedList.Size()-1);
 		tThirdAnswer2 = new ('Samples_ZF_Label').Init
@@ -1164,12 +1188,5 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         );
         // Calculate the horizontal position for the label so that it's centered on the screen.
         tThirdAnswer2.box.pos.X = 201;
-        // Add the label element to the main frame.
-        tThirdAnswer2.Pack (mainFrame);
-		
-		fQuestion.Pack (mainFrame);
-		sQuestion.Pack (mainFrame);
-		tQuestion.Pack (mainFrame);
-		tQuestion2.Pack (mainFrame);
     }
 }
