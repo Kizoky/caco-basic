@@ -8,10 +8,14 @@ class CacoBasics : Pathfinder2
 	{
 		Super.Tick();
 		
+		/*
 		if (!target && CopiedPoints)
 		{
-			target = InterestPoint[random(0,InterestPoint.Size()-1)];
+			int rnd = random(0,InterestPoint.Size()-1);
+			if (InterestPoint[rnd])
+				target = InterestPoint[rnd];
 		}
+		*/
 		
 		if (target && target is 'PlayerPawn' && Distance2D(target) < 75)
 		{

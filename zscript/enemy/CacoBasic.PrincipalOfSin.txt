@@ -52,7 +52,11 @@ class PrincipalBasics : PathFinder2
 		// PoS will randomly wander around the map if he's activated.
 		if (!target && level.time > WaitBeforeActive)
 		{
-			target = InterestPoint[random(0,InterestPoint.Size()-1)];
+			int rnd = random(0,InterestPoint.Size()-1);
+			if (InterestPoint[rnd])
+				target = InterestPoint[rnd];
+			
+			//target = InterestPoint[random(0,InterestPoint.Size())];
 		}
 		
 		// Player broke the rule. Let's punish him
@@ -106,8 +110,15 @@ class PrincipalBasics : PathFinder2
 					PunishmentInTime = false;
 					DetentionForYou = false;
 					ExecutingInProgress = false;
-					target = InterestPoint[random(0,InterestPoint.Size()-1)];
-					goal = InterestPoint[random(0,InterestPoint.Size()-1)];
+					//target = InterestPoint[random(0,InterestPoint.Size())];
+					//goal = InterestPoint[random(0,InterestPoint.Size())];
+					
+					int rnd = random(0,InterestPoint.Size()-1);
+					if (InterestPoint[rnd])
+					{
+						target = InterestPoint[rnd];
+						goal = InterestPoint[rnd];
+					}
 				}
 			
 			}
@@ -120,7 +131,10 @@ class PrincipalBasics : PathFinder2
 		{
 			target = null;
 			goal = null;
-			target = InterestPoint[random(0,InterestPoint.Size()-1)];
+			
+			int rnd = random(0,InterestPoint.Size()-1);
+			if (InterestPoint[rnd])
+				target = InterestPoint[rnd];
 		}
 	
 	}

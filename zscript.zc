@@ -219,7 +219,7 @@ class Pathfinder2 : Actor
 					if (target)
 						dist = target.Distance2d(nav);
 					
-                    if ((goalDist < 0 || dist < goalDist) && target.CheckSight(nav))
+                    if (target && (goalDist < 0 || dist < goalDist) && target.CheckSight(nav))
                     {
                         goalNav = nav;
                         goalDist = dist;

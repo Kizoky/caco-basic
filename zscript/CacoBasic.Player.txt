@@ -84,7 +84,7 @@ class BasicsPlayer : PlayerPawn
 		Player.JumpZ 0;
 		Player.ViewHeight 47;
 		Player.StartItem "HUDViewable", 1;
-		-SOLID
+		+SOLID
 	}
 	States
 	{

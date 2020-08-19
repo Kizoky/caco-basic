@@ -12,25 +12,28 @@ class BasicsCoreHandler : EventHandler
 		if (PrincipalOfSin && PrincipalOfSin.WaitBeforeActive > level.time)
 		{
 			PrincipalOfSin.InterestPoint.Copy(PrincipalPoint);
+			
 			PrincipalOfSin.CacoTeacher = Caco;
+				
 			PrincipalOfSin.DetentionRoomPlayer = DetentionRoomP;
 			PrincipalOfSin.DetentionRoomSelf = DetentionRoomB;
 		}
 		
 		let Dootka = DootBasics(Doot);
-		if (Dootka && !Dootka.CopiedPoints)
+		if (PrincipalOfSin && Dootka && !Dootka.CopiedPoints)
 		{
 			Dootka.InterestPoint.Copy(PrincipalPoint);
 			Dootka.CopiedPoints = true;
 		}
 		
+		/*
 		let Cacod = CacoBasics(Caco);
-		if (Cacod && !Cacod.CopiedPoints)
+		if (PrincipalOfSin && Cacod && !Cacod.CopiedPoints)
 		{
 			Cacod.InterestPoint.Copy(PrincipalPoint);
 			Cacod.CopiedPoints = true;
 		}
-		
+		*/
 	}
 	
 	override void NetworkProcess (ConsoleEvent e)

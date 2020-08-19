@@ -1,0 +1,341 @@
+/*
+	* Caco's Basics Door. Copied from Share the Doom, they both work the same way.
+	* Please credit Caco's Basics or Share the Doom if you want to use this code in your mod
+*/
+
+class BasicsDoor : Actor
+{
+	int AngleBefore;
+	int DoorCloseTime;
+	bool DoorClosed;
+	bool HitOnce;
+	bool FrontBack;
+	
+	float RotationSpeed;
+	
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		/*
+		if (abs (DeltaAngle (AngleBefore, source.angle)) >= 90)
+		{
+			Console.Printf("Front: %d", source.angle);
+		} else Console.Printf("Back: %d", source.angle);
+		*/
+		
+		//Check to prevent spamming that would break the door
+		if (DoorClosed == false) return Super.DamageMobj(inflictor,source,damage,mod,flags,angle);
+		
+		HitOnce = true;
+		DoorCloseTime = level.time + (35 * 5);
+		//A_PlaySound("door/kick", 0);
+		
+		// A simple check to detect if Door was hit in front or back
+		
+		if (source == null) return Super.DamageMobj(inflictor,source,damage,mod,flags,angle);
+		
+		if (abs (DeltaAngle (AngleBefore, source.angle)) >= 90)
+		{
+			FrontBack = false;
+			SetStateLabel("Open");
+			return Super.DamageMobj(inflictor,source,damage,mod,flags,angle);
+		} 
+		else 
+		{
+			FrontBack = true;
+			SetStateLabel("Open");
+			return Super.DamageMobj(inflictor,source,damage,mod,flags,angle);
+		}
+		return Super.DamageMobj(inflictor,source,damage,mod,flags,angle);
+	}
+	
+	virtual void A_OpenDoor()
+	{
+		DoorClosed = false;
+		
+		// If hit from front
+		if (FrontBack == true)
+		{
+			//Console.Printf("Hitting front");
+			if (abs (deltaangle (angle, AngleBefore-90)) < 10)
+			{
+				angle = AngleBefore-90;
+				SetStateLabel("Spawn");
+				return;
+			}
+			
+			if (((AngleBefore-90) - angle + 360) % 360 < 180)
+			{	
+				angle = angle+RotationSpeed;
+			}
+			else angle = angle-RotationSpeed;
+			
+			SetOrigin(pos+(0,1,0), TRUE);
+		}
+		
+		// If hit from back
+		if (FrontBack == false)
+		{
+			//Console.Printf("Hitting back");
+			if (abs (deltaangle (angle, AngleBefore+90)) < 10)
+			{
+				angle = AngleBefore+90;
+				SetStateLabel("Spawn");
+				return;
+			}
+			
+			if (((AngleBefore+90) - angle + 360) % 360 < 180)
+			{	
+				angle = angle+RotationSpeed;
+			}
+			else angle = angle-RotationSpeed;
+		}
+		
+	}
+	
+	virtual void A_CloseDoor()
+	{
+		RotationSpeed = 16;
+		
+		if (abs (deltaangle (angle, AngleBefore)) < 10)
+		{
+			DoorClosed = true;
+			angle = AngleBefore;
+			A_PlaySound("door/close", 0);
+			SetStateLabel("Spawn");
+			return;
+		}
+		
+		if (((AngleBefore) - angle + 360) % 360 < 180)
+		{	
+			angle = angle+RotationSpeed;
+		}
+		else angle = angle-RotationSpeed;
+		
+	}
+	
+	vector3 OriginalPos;
+	
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		AngleBefore = self.angle;
+		DoorClosed = true;
+		OriginalPos = pos;
+		RotationSpeed = 16;
+	}
+	
+	override void Tick()
+	{
+		Super.Tick();
+	}
+	
+	override void Activate(Actor activator)
+	{
+		if (activator && !isFrozen())
+		{
+			touch(activator);
+		}
+	}
+	
+	override void Deactivate(Actor activator)
+	{
+		if (activator)
+		{
+			activate(activator);
+		}
+	}
+	
+	override void Touch(Actor toucher)
+	{
+		if (toucher)
+		{
+			if (DoorClosed == false) return;
+			
+			HitOnce = true;
+			DoorCloseTime = level.time + (35 * 5);
+			
+			A_PlaySound("door/open", 0);
+			
+			// A simple check to detect if Door was hit in front or back
+			if (abs (DeltaAngle (AngleBefore, toucher.angle)) >= 90)
+			{
+				FrontBack = false;
+				RotationSpeed = 8;
+				SetStateLabel("Open");
+				return;
+			} 
+			else 
+			{
+				FrontBack = true;
+				RotationSpeed = 8;
+				SetStateLabel("Open");
+				return;
+			}
+		}
+	}
+	
+	Default
+	{
+		//$Category Gameplay
+		//$Title "Door"
+		//$Color 5
+		Radius 5;
+		Height 85;
+		+SHOOTABLE
+		+ROLLSPRITE
+		+ABSMASKPITCH
+		+MOVEWITHSECTOR
+		+NOTARGET
+		MONSTER;
+		+FRIENDLY
+		+INTERPOLATEANGLES
+		+NOBLOOD
+		PainChance 0;
+		Health 99999999;
+	}
+	States
+	{
+	Spawn:
+		PROP A 10
+		{
+			if (level.time > DoorCloseTime && DoorClosed == false && HitOnce == true)
+			{
+				SetStateLabel("Close");
+			}
+		}
+		Loop;
+	Open:
+		PROP A 2 A_OpenDoor();
+		Loop;
+	Close:
+		PROP A 2 A_CloseDoor();
+		Loop;
+	}
+}
+
+class BasicsDoor_Extender : Actor
+{
+	Actor AttachedToDoor;
+	int AngleBefore;
+	
+	int TimeBeforeWarning;
+	bool WarningSent;
+	
+	bool SearchFinished;
+	
+	virtual void A_SearchForDoor()
+	{
+		if (SearchFinished) return;
+		
+		BlockThingsIterator it = BlockThingsIterator.Create (self, 175);
+		
+		while (it.Next ()) 
+		{
+			let next = it.Thing;
+			
+			if (next && next is 'BasicsDoor' && next.pos.z ~== self.pos.z)
+			{
+				AttachedToDoor = next;
+				SearchFinished = true;
+			}
+		}
+	}
+	
+	override void Touch(Actor toucher)
+	{
+		if (toucher)
+		{
+			actor Stinky = toucher;
+			let door = BasicsDoor(AttachedToDoor);
+			if (door)
+			{
+				door.touch(Stinky);
+			}
+		}
+	}
+	
+	vector3 OriginalPos;
+	
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		
+		TimeBeforeWarning = level.time + 35 * 3;
+	}
+	
+	override void Tick()
+	{
+		Super.Tick();
+		
+		let door = BasicsDoor(AttachedToDoor);
+		if (door)
+		{
+			if (door.DoorClosed == false)
+			{
+				bNOCLIP = true; 
+				bSHOOTABLE = false;
+			} else { bNOCLIP = false; bSHOOTABLE = true; }
+		}
+		
+		if (level.time > TimeBeforeWarning && !door && !WarningSent)
+		{
+			Console.Printf("Warning: Extender has no attached Door at (warp %d %d %d)!!!", pos.x, pos.y, pos.z);
+			Console.Printf("Is the Extender facing it's Door correctly? & has same Z position as the Door?");
+			Console.Printf("");
+			A_StartSound("error", CHAN_VOICE, CHANF_LOCAL);
+			WarningSent = true;
+		}
+	}
+	
+	override void Activate(Actor activator)
+	{
+		if (activator)
+		{
+			let door = BasicsDoor(AttachedToDoor);
+			if (door)
+				door.Activate(activator);
+		}
+	}
+	
+	override void Deactivate(Actor activator)
+	{
+		if (activator)
+		{
+			let door = BasicsDoor(AttachedToDoor);
+			if (door)
+				door.Activate(activator);
+		}
+	}
+	
+	Default
+	{
+		//$Category Gameplay
+		//$Title "Door Extender"
+		//$Sprite ZDORA0
+		Radius 7;
+		Height 85;
+		+SHOOTABLE
+		+ROLLSPRITE
+		+ABSMASKPITCH
+		+MOVEWITHSECTOR
+		+NOTARGET
+		MONSTER;
+		+FRIENDLY
+		+INTERPOLATEANGLES
+		+NOBLOOD
+		//+SPECIAL
+		PainChance 0;
+		BloodType "null";
+		Health 99999999;
+		
+		// We don't need +SPECIAL
+		+BUMPSPECIAL
+		Activation THINGSPEC_Default | THINGSPEC_Switch | THINGSPEC_ThingActs | THINGSPEC_Activate | THINGSPEC_MonsterTrigger;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 10 A_SearchForDoor();
+		Loop;
+	}
+}

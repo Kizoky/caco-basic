@@ -2,7 +2,7 @@ GameInfo
 {
 	PlayerClasses = "BasicsPlayer"
 	StatusBarClass = "BasicsStatusBar"
-	AddEventHandlers = "RadiusDebugHandler"
+	AddEventHandlers = "RadiusDebugHandler", "NavMeshInit", "BasicsCoreHandler"
 }
 
 clearepisodes
@@ -19,6 +19,13 @@ Map BASICS "Caco's Basics In Dissecting & Sacrificing"
 
 DoomEdNums
 {
-  //32766 = SCG_LadderHelper
-  //32765 = SCG_LadderHelperTop
+	1004 = PrincipalInterest
+	1003 = PrincipalBasics
+	1002 = CacoBasics
+	1001 = NavPoint
+	1000 = DetentionRoomPlayer
+	999 = DetentionRoomPrincipal
+	998 = DootBasics
+	997 = BasicsDoor
+	996 = BasicsDoor_Extender
 }

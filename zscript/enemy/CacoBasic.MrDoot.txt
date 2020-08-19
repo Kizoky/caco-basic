@@ -41,7 +41,9 @@ class DootBasics : Pathfinder2
 		
 		if (!target && CopiedPoints)
 		{
-			target = InterestPoint[random(0,InterestPoint.Size()-1)];
+			int rnd = random(0,InterestPoint.Size()-1);
+			if (InterestPoint[rnd])
+				target = InterestPoint[rnd];
 		}
 		
 		if (target is 'BasicsPlayer')
@@ -91,7 +93,10 @@ class DootBasics : Pathfinder2
 		{
 			target = null;
 			goal = null;
-			target = InterestPoint[random(0,InterestPoint.Size()-1)];
+			
+			int rnd = random(0,InterestPoint.Size()-1);
+			if (InterestPoint[rnd])
+				target = InterestPoint[rnd];
 		}
 	
 	}
