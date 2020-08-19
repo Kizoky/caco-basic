@@ -40,6 +40,20 @@ class BasicsCoreHandler : EventHandler
 		{
 			Caco.goal = null;
 		}
+		
+		if (e.Name ~== "FinishedBook")
+		{
+			let player = players[e.Player].mo;
+			if (player)
+			{
+				let BasicsP = BasicsPlayer(player);
+				if (BasicsP)
+				{
+					BasicsP.FinishedBook();
+				}
+			}
+		
+		}
 	}
 	
 	override void PlayerEntered (PlayerEvent e)

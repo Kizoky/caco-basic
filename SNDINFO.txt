@@ -1,5 +1,6 @@
 caco/whip sounds/Caco/ruler.lmp
 caco/gameover sounds/Caco/Screech.ogg
+caco/hiss sounds/Caco/angryhiss.wav
 
 principal/norunninginthehalls sounds/Principal/norunning.lmp
 principal/detentionforyou sounds/Principal/detention4u.lmp

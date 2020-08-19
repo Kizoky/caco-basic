@@ -7,6 +7,13 @@ class BasicsPlayer : PlayerPawn
 	double MoveSpeed, RestPoints, RunningLength;
 	int BooksDone;
 	
+	virtual void FinishedBook()
+	{
+		BooksDone += 1;
+		A_StartSound("caco/hiss", CHAN_VOICE);
+		A_Quake(4,80,0,1000);
+	}
+	
 	override void Tick()
 	{
 		Super.Tick();

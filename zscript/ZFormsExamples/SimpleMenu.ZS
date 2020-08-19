@@ -98,26 +98,50 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
 		// ------------------------------------------------- Third buttons in a line
 		if (command == "tFirstButton")
         {
-            // Change the text's colour to a random colour.
+            link.tFirstAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tFirstAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tSecondAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tSecondAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tThirdAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tThirdAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tQuestion.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tQuestion2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			
 			link.ThirdConfirm = true;
             link.tFirstButton.disabled = true;
-			link.tSecondButton.disabled = false;
-			link.tThirdButton.disabled = false;
+			link.tSecondButton.disabled = true;
+			link.tThirdButton.disabled = true;
         }
 		if (command == "tSecondButton")
         {
-            // Change the text's colour to a random colour.
+            link.tFirstAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tFirstAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tSecondAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tSecondAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tThirdAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tThirdAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tQuestion.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tQuestion2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			
 			link.ThirdConfirm = true;
-            link.tFirstButton.disabled = false;
+            link.tFirstButton.disabled = true;
 			link.tSecondButton.disabled = true;
-			link.tThirdButton.disabled = false;
+			link.tThirdButton.disabled = true;
         }
 		if (command == "tThirdButton")
         {
-            // Change the text's colour to a random colour.
+            link.tFirstAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tFirstAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tSecondAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tSecondAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tThirdAnswer.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tThirdAnswer2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tQuestion.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			link.tQuestion2.textColor = random [textColor] (Font.CR_BRICK, Font.CR_TEAL);
+			
 			link.ThirdConfirm = true;
-            link.tFirstButton.disabled = false;
-			link.tSecondButton.disabled = false;
+            link.tFirstButton.disabled = true;
+			link.tSecondButton.disabled = true;
 			link.tThirdButton.disabled = true;
         }
 		
@@ -327,7 +351,20 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 			Ticktack += 1;
 			
 			if (CountdowntoClosing < Ticktack && CountdowntoClose)
+			{
+				let player = players [consoleplayer].mo;
+				if (player)
+				{
+					let BasicsPlayerr = BasicsPlayer(player);
+					if (BasicsPlayerr)
+					{
+						//BasicsPlayerr.FinishedBook();
+						//BasicsPlayerr.A_GiveInventory("HUDViewable");
+						EventHandler.SendNetworkEvent("FinishedBook");
+					}
+				}
 				Close();
+			}
 		}
 		
 		// Make these appear when Player answered
@@ -786,7 +823,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
-            text: string.Format("What is %d + %d ? debug: %d  ",sFirst, sSecond, SecondCorrect),
+            text: string.Format("What is %d + %d ? ",sFirst, sSecond, SecondCorrect),
             // The font to use
             fnt: smallFont,
             // Whether to automatically wrap the text or not
