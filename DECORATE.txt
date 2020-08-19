@@ -37,3 +37,17 @@ radius 10
     loop
   }
 }
+
+
+actor telescop 20204
+{
+height 30
+radius 10
+  +FLOORCLIP
+  states
+  {
+  spawn:
+    SCOP A 1 
+    loop
+  }
+}
