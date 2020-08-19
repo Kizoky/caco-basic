@@ -15,35 +15,43 @@ class Samples_SimpleMenuHandler : Samples_ZF_Handler
     // We need this to be able to do anything with our menu.
     CacoBasics_Math link;
 	
-	/* I will deal with this when I know where to override this
-	
-	*/
-	
     override void buttonClickCommand (Samples_ZF_Button caller, string command)
     {
         // -------------------------------------------------- First buttons in a line
         if (command == "fFirstButton")
         {
-            // Change the text's colour to a random colour.
+			if (link.fCorrectButton == link.fFirstButton)
+				link.fFirstAnswer.textColor = Font.CR_GREEN;
+			else
+				link.fFirstAnswer.textColor = Font.CR_RED;
+			
 			link.FirstConfirm = true;
             link.fFirstButton.disabled = true;
-			link.fSecondButton.disabled = false;
-			link.fThirdButton.disabled = false;
+			link.fSecondButton.disabled = true;
+			link.fThirdButton.disabled = true;
         }
 		if (command == "fSecondButton")
         {
-            // Change the text's colour to a random colour.
+			if (link.fCorrectButton == link.fSecondButton)
+				link.fSecondAnswer.textColor = Font.CR_GREEN;
+			else
+				link.fSecondAnswer.textColor = Font.CR_RED;
+			
 			link.FirstConfirm = true;
-            link.fFirstButton.disabled = false;
+            link.fFirstButton.disabled = true;
 			link.fSecondButton.disabled = true;
-			link.fThirdButton.disabled = false;
+			link.fThirdButton.disabled = true;
         }
 		if (command == "fThirdButton")
         {
-            // Change the text's colour to a random colour.
+            if (link.fCorrectButton == link.fThirdButton)
+				link.fThirdAnswer.textColor = Font.CR_GREEN;
+			else
+				link.fThirdAnswer.textColor = Font.CR_RED;
+			
 			link.FirstConfirm = true;
-            link.fFirstButton.disabled = false;
-			link.fSecondButton.disabled = false;
+            link.fFirstButton.disabled = true;
+			link.fSecondButton.disabled = true;
 			link.fThirdButton.disabled = true;
         }
 		
@@ -123,6 +131,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
     Samples_ZF_Button fFirstButton;
 	Samples_ZF_Button fSecondButton;
 	Samples_ZF_Button fThirdButton;
+	
+	Samples_ZF_Button fCorrectButton;
     // First answers + the Question (they are next to the buttons)
 	Samples_ZF_Label fQuestion;
     Samples_ZF_Label fFirstAnswer;
@@ -133,6 +143,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
     Samples_ZF_Button sFirstButton;
 	Samples_ZF_Button sSecondButton;
 	Samples_ZF_Button sThirdButton;
+	
+	Samples_ZF_Button sCorrectButton;
     // First answers + the Question (they are next to the buttons)
 	Samples_ZF_Label sQuestion;
     Samples_ZF_Label sFirstAnswer;
@@ -185,6 +197,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						fFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (FirstConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "fFirstButton"); 
 							BasicsConfirm = false;
 						}
@@ -193,6 +207,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						fSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (FirstConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "fSecondButton"); 
 							BasicsConfirm = false;
 						}
@@ -201,6 +217,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						fThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (FirstConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "fThirdButton"); 
 							BasicsConfirm = false;
 						}
@@ -215,6 +233,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						sFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (SecondConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "sFirstButton"); 
 							BasicsConfirm = false;
 						}
@@ -223,6 +243,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						sSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (SecondConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "sSecondButton"); 
 							BasicsConfirm = false;
 						}
@@ -231,6 +253,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						sThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (SecondConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "sThirdButton"); 
 							BasicsConfirm = false;
 						}
@@ -245,6 +269,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						tFirstButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (ThirdConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "tFirstButton"); 
 							BasicsConfirm = false;
 						}
@@ -253,6 +279,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						tSecondButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (ThirdConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "tSecondButton"); 
 							BasicsConfirm = false;
 						}
@@ -261,6 +289,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 						tThirdButton.curButtonState = Samples_ZF_Button.ButtonState_Hover;
 						if (BasicsConfirm)
 						{
+							if (ThirdConfirm) { BasicsConfirm = false; return; }
+							
 							handler.buttonClickCommand(ActiveButton, "tThirdButton"); 
 							BasicsConfirm = false;
 						}
@@ -649,16 +679,19 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		{
 			case 1:
 				First = FirstCorrect;
+				fCorrectButton = fFirstButton;
 				Second = 0;
 				Third = 0;
 				break;
 			case 2:
 				Second = FirstCorrect;
+				fCorrectButton = fSecondButton;
 				Third = 0;
 				First = 0;
 				break;
 			case 3:
 				Third = FirstCorrect;
+				fCorrectButton = fThirdButton;
 				First = 0;
 				Second = 0;
 				break;
