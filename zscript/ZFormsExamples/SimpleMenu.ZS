@@ -275,7 +275,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 			Close();
 		}
 		
-		Console.Printf("Row: %d | Active: %d", BasicsRow, BasicsActive);
+		//Console.Printf("Row: %d | Active: %d", BasicsRow, BasicsActive);
 		
 		Super.BasicsKeyboard();
 	
@@ -450,6 +450,8 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
         // Add the button element into the main frame.
         fThirdButton.Pack (mainFrame);
 		
+		
+		
 		sFirstButton = new ('Samples_ZF_Button').Init
         (
             // Position
@@ -617,8 +619,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		
 		fFirst = random[ss](1,50);
 		fSecond = random[sd](1,50);
-		FirstCorrect = fFirst + fSecond;
-		CorrectButton = random(1,3);
 		
 		fQuestion = new ('Samples_ZF_Label').Init
         (
@@ -643,23 +643,59 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		// ----------------------------------------------------------------------------
 		
 		int First, Second, Third;
+		CorrectButton = random(1,3);
+		FirstCorrect = fFirst + fSecond;
 		switch (CorrectButton)
 		{
 			case 1:
 				First = FirstCorrect;
+				Second = 0;
+				Third = 0;
 				break;
 			case 2:
 				Second = FirstCorrect;
+				Third = 0;
+				First = 0;
 				break;
 			case 3:
 				Third = FirstCorrect;
+				First = 0;
+				Second = 0;
 				break;
 		}
 		
 		// Fill out empty answers with random gibberish
-		if (First == 0) First = random[sf](1,50); + random[sg](1,50);
-		if (Second == 0) Second = random[sf](1,50); + random[sg](1,50);
-		if (Third == 0) Third = random[sf](1,50); + random[sg](1,50);
+		if (First == 0) First = random[sf](1,30); + random[sg](1,40);
+		if (Second == 0) Second = random[sf](1,20); + random[sg](1,60);
+		if (Third == 0) Third = random[sf](1,40); + random[sg](1,70);
+		
+		// Because sometimes the RNG isn't that great.. In fact they can generate the same number as
+		// the correct answer, which is funny as hell when you can't tell which button is right
+		bool AddorRemove = random[rm](0,1);
+		
+		if (First == FirstCorrect && CorrectButton != 1)
+		{
+			if (AddorRemove)
+				First += frandom[aor](1,4);
+			else
+				First -= frandom[aor](1,4);
+		}
+		AddorRemove = random[rm](0,1);
+		if (Second == FirstCorrect && CorrectButton != 2)
+		{
+			if (AddorRemove)
+				Second += frandom[aor](1,4);
+			else
+				Second -= frandom[aor](1,4);
+		}
+		AddorRemove = random[rm](0,1);
+		if (Third == FirstCorrect && CorrectButton != 3)
+		{
+			if (AddorRemove)
+				Third += frandom[aor](1,4);
+			else
+				Third -= frandom[aor](1,4);
+		}
 		
         fFirstAnswer = new ('Samples_ZF_Label').Init
         (
@@ -731,10 +767,6 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		
 		// ------------------------------------------------------------- Second Answers and Question
 		
-		First = 0;
-		Second = 0;
-		Third = 0;
-		
 		sFirst = random[ssr](1,50);
 		sSecond = random[sdt](1,50);
 		SecondCorrect = sFirst + sSecond;
@@ -747,7 +779,7 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
             // Size.
             (0, smallFont.GetHeight ()),
             // The label's text
-            text: string.Format("What is %d + %d ? ",sFirst, sSecond),
+            text: string.Format("What is %d + %d ? debug: %d  ",sFirst, sSecond, SecondCorrect),
             // The font to use
             fnt: smallFont,
             // Whether to automatically wrap the text or not
@@ -764,18 +796,53 @@ class CacoBasics_Math : Samples_ZF_GenericMenu
 		{
 			case 1:
 				First = SecondCorrect;
+				Second = 0;
+				Third = 0;
 				break;
 			case 2:
 				Second = SecondCorrect;
+				First = 0;
+				Third = 0;
 				break;
 			case 3:
 				Third = SecondCorrect;
+				First = 0;
+				Second = 0;
 				break;
 		}
 		
 		if (First == 0) First = random[sfrr](1,60); + random[sgl](1,40);
 		if (Second == 0) Second = random[sftt](1,30); + random[sgr](1,70);
 		if (Third == 0) Third = random[sfzz](1,70); + random[sgt](1,20);
+		
+		// Because sometimes the RNG isn't that great.. In fact they can generate the same number as
+		// the correct answer, which is funny as hell when you can't tell which button is right
+		AddorRemove = random[rm](0,1);
+		
+		if (First == SecondCorrect && CorrectButton != 1)
+		{
+			if (AddorRemove)
+				First += frandom[aor](1,4);
+			else
+				First -= frandom[aor](1,4);
+		}
+		AddorRemove = random[rm](0,1);
+		if (Second == SecondCorrect && CorrectButton != 2)
+		{
+			if (AddorRemove)
+				Second += frandom[aor](1,4);
+			else
+				Second -= frandom[aor](1,4);
+		}
+		AddorRemove = random[rm](0,1);
+		if (Third == SecondCorrect && CorrectButton != 3)
+		{
+			if (AddorRemove)
+				Third += frandom[aor](1,4);
+			else
+				Third -= frandom[aor](1,4);
+		}
+		
 		
 		sFirstAnswer = new ('Samples_ZF_Label').Init
         (
