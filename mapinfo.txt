@@ -28,4 +28,5 @@ DoomEdNums
 	998 = DootBasics
 	997 = BasicsDoor
 	996 = BasicsDoor_Extender
+	995 = BasicsDoor2
 }

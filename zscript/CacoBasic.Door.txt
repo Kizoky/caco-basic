@@ -339,3 +339,14 @@ class BasicsDoor_Extender : Actor
 		Loop;
 	}
 }
+
+
+class BasicsDoor2 : BasicsDoor
+{
+	Default
+	{
+		//$Category Gameplay
+		//$Title "Stencil Door"
+		//$Color 5
+	}
+}
