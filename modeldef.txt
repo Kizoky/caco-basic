@@ -4,7 +4,7 @@ Model "BasicsDoor"
 {
 	Path "models\door"
 	Model 0 "door.md3"
-	SurfaceSkin 0 0 "doorlump.png"
+	SurfaceSkin 0 0 "doorlump.lmp"
 	AngleOffset 0
 	USEACTORPITCH
 	Scale -0.40 -0.43 0.38
@@ -18,7 +18,7 @@ Model "BasicsDoor2"
 {
 	Path "models\door"
 	Model 0 "door.md3"
-	SurfaceSkin 0 0 "stencil_door.png"
+	SurfaceSkin 0 0 "stencil_door.lmp"
 	AngleOffset 0
 	USEACTORPITCH
 	Scale -0.40 -0.43 0.38
