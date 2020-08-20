@@ -100,7 +100,7 @@ class BasicsDoor : Actor
 		{
 			DoorClosed = true;
 			angle = AngleBefore;
-			A_PlaySound("door/close", 0);
+			A_PlaySound("doors/dr1_clos", 0);
 			SetStateLabel("Spawn");
 			return;
 		}
@@ -154,7 +154,7 @@ class BasicsDoor : Actor
 			HitOnce = true;
 			DoorCloseTime = level.time + (35 * 5);
 			
-			A_PlaySound("door/open", 0);
+			A_PlaySound("doors/dr1_open", 0);
 			
 			// A simple check to detect if Door was hit in front or back
 			if (abs (DeltaAngle (AngleBefore, toucher.angle)) >= 90)
