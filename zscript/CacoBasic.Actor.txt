@@ -59,7 +59,7 @@ class BasicsActor : Actor
 			
 			if (!invoker.navIndicator)
 			{
-				invoker.navIndicator = Spawn("navIndicator",goal.pos);
+				//invoker.navIndicator = Spawn("navIndicator",goal.pos);
 			}
 
             A_Face(goal);
@@ -96,11 +96,11 @@ class BasicsActor : Actor
             invoker.path.Pop();
 
             // DEBUG
-			if (invoker.navIndicator)
-			{
-				invoker.navIndicator.A_Remove(AAPTR_DEFAULT, RMVF_EVERYTHING);
-				invoker.navIndicator = Spawn("NavIndicator", goal.pos);
-			}
+			//if (invoker.navIndicator)
+			//{
+				//invoker.navIndicator.A_Remove(AAPTR_DEFAULT, RMVF_EVERYTHING);
+				//invoker.navIndicator = Spawn("NavIndicator", goal.pos);
+			//}
         }
         else
         {

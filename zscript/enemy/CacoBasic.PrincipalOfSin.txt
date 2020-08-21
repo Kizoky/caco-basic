@@ -180,9 +180,7 @@ class PrincipalInterest : Actor
     {
         Radius 16;
         Height 16;
-		Scale 0.3;
-
-        RenderStyle "Add";
+		Scale 0.5;
 
         +NOGRAVITY
         +NOBLOCKMAP
@@ -191,11 +189,12 @@ class PrincipalInterest : Actor
     States
     {
     Spawn:
-        BBRN A 6 Bright
-        {
-            angle += 10;
-        }
-        Loop;
+        ABCD A 0 Bright;
+        Goto Invisible;
+	Invisible:
+		TNT1 A 6;
+		Loop;
+		
     }
 }
 
