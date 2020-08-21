@@ -7,6 +7,8 @@ class BasicsPlayer : PlayerPawn
 	double MoveSpeed, RestPoints, RunningLength;
 	int BooksDone;
 	
+	bool DeveloperCheating;
+	
 	virtual void FinishedBook()
 	{
 		BooksDone += 1;
@@ -22,10 +24,13 @@ class BasicsPlayer : PlayerPawn
 		// MoveSpeed > 1.62 = running
 		MoveSpeed = vel.xy.Length();
 		
-		if (MoveSpeed == 0 && RestPoints <= 100)
-			RestPoints += 0.3;
-		else if (MoveSpeed > RunningLength && RestPoints >= 0)
-			RestPoints -= 0.3;
+		if (!DeveloperCheating)
+		{
+			if (MoveSpeed == 0 && RestPoints <= 100)
+				RestPoints += 0.3;
+			else if (MoveSpeed > RunningLength && RestPoints >= 0)
+				RestPoints -= 0.3;
+		}
 		
 		if (RestPoints <= 0)
 		{
@@ -67,6 +72,16 @@ class BasicsPlayer : PlayerPawn
 		RunningLength = 1.62;
 		
 		BooksDone = 1;
+		
+		cvar developercvar = cvar.findcvar('basics_developer');
+		bool developer = (developercvar != null && developercvar.GetBool ());
+		
+		if (developer && !Multiplayer)
+		{
+			Console.Printf("Developer mode enabled.");
+			DeveloperCheating = true;
+			RestPoints = 666;
+		}
 	}
 
 	Default

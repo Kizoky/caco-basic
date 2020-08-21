@@ -4,3 +4,5 @@ user int smileyUI_Y = 0;
 
 user int smileyUI_scaleX = 0;
 user int smileyUI_scaleY = 0;
+
+user bool basics_developer = false;
