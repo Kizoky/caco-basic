@@ -61,8 +61,8 @@ class CacoBasics : BasicsActor
 	Default
 	{
 		Health 666;
-		Radius 25;
-		Height 56;
+		Radius 10;
+		Height 10;
 		Mass 400;
 		Speed 0.25;
 		PainChance 0;

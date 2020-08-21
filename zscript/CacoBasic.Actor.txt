@@ -43,10 +43,11 @@ class BasicsActor : Actor
     Actor navIndicator;
     action void A_Star()
     {
-        if (CheckSight(target) && Distance2D(target) < 100)
+        if (Distance2D(target) < 25)
         {
             invoker.path.Clear();
             goal = null;
+			target = null;
 
             invoker.A_BasicsChase();
 			

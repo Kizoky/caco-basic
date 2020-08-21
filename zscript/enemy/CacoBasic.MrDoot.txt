@@ -104,8 +104,8 @@ class DootBasics : BasicsActor
 	Default
 	{
 		Health 300;
-		Radius 20;
-		Height 56;
+		Radius 10;
+		Height 10;
 		Mass 500;
 		Speed 10;
 		PainChance 100;
