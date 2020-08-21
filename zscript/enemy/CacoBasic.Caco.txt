@@ -1,4 +1,4 @@
-class CacoBasics : Pathfinder2
+class CacoBasics : BasicsActor
 {
 	Array<Actor> InterestPoint;
 	int TimeBeforeRuler, DontSpamSight;

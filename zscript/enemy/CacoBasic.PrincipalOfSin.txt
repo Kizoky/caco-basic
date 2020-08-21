@@ -1,4 +1,4 @@
-class PrincipalBasics : PathFinder2
+class PrincipalBasics : BasicsActor
 {
 	Array<Actor> InterestPoint;
 	int CurrentPoint, WaitBeforeActive;

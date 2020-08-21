@@ -1,4 +1,4 @@
-class DootBasics : Pathfinder2
+class DootBasics : BasicsActor
 {
 	Array<Actor> InterestPoint;
 	bool DootingInProgress, CopiedPoints;
