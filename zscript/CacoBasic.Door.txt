@@ -190,6 +190,7 @@ class BasicsDoor : Actor
 		+FRIENDLY
 		+INTERPOLATEANGLES
 		+NOBLOOD
+		-SOLID
 		PainChance 0;
 		Health 99999999;
 	}
