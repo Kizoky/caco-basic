@@ -8,3 +8,6 @@ class HUDViewable : Inventory
 		-Inventory.INVBAR;
 	}
 }
+
+// Player is outside the halls
+class BasicsLogic_Halls : Inventory { Default { Inventory.MaxAmount 1; +Inventory.UNDROPPABLE; -Inventory.INVBAR; } }

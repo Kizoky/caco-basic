@@ -11,7 +11,7 @@ version "4.1.3"
 #include "zscript/enemy/CacoBasic.MrDoot.txt"
 #include "zscript/enemy/CacoBasic.PrincipalOfSin.txt"
 
-#include "zscript/inventory/CacoBasic.HUDViewable.txt"
+#include "zscript/inventory/CacoBasic.InventoryLogic.txt"
 
 #include "zscript/CacoBasic.Actor.txt"
 #include "zscript/CacoBasic.Door.txt"

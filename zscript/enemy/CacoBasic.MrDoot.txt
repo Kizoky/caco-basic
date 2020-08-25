@@ -30,6 +30,7 @@ class DootBasics : BasicsActor
 					target = Player;
 					Player.A_StartSound("mrdoot/horn", CHAN_BODY);
 					DootingInProgress = true;
+					path.Clear();
 				}
 			}
 		}

@@ -11,7 +11,9 @@ class BasicsPlayer : PlayerPawn
 	
 	virtual void FinishedBook()
 	{
-		BooksDone += 1;
+		if (BooksDone < 7)
+			BooksDone += 1;
+			
 		A_StartSound("caco/hiss", CHAN_VOICE);
 		A_Quake(4,80,0,1000);
 	}
@@ -20,6 +22,9 @@ class BasicsPlayer : PlayerPawn
 	{
 		Super.Tick();
 		if ( !player || (player.mo != self) ) return;
+		
+		if (CheckInventory("BasicsLogic_Halls",1)) Console.Printf("In the halls");
+		else Console.Printf("Outside");
 		
 		// MoveSpeed > 1.62 = running
 		MoveSpeed = vel.xy.Length();
@@ -99,6 +104,7 @@ class BasicsPlayer : PlayerPawn
 		Player.JumpZ 0;
 		Player.ViewHeight 47;
 		Player.StartItem "HUDViewable", 1;
+		Player.StartItem "BasicsLogic_Halls", 1;
 		+SOLID
 	}
 	States

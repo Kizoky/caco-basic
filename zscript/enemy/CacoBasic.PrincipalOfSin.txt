@@ -31,6 +31,7 @@ class PrincipalBasics : BasicsActor
 						target = Player;
 						Player.A_StartSound("principal/norunninginthehalls", CHAN_AUTO);
 						ExecutingInProgress = true;
+						path.Clear();
 						
 					}
 				}
