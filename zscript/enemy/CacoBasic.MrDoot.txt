@@ -90,7 +90,8 @@ class DootBasics : BasicsActor
 		
 		if (DootingInProgress) return;
 		
-		if ((target && Distance2D(target) < 100 || target is 'PlayerPawn') && !DootingInProgress && CopiedPoints)
+		/*
+		if ((target && Distance2D(target) < 120) && !DootingInProgress && CopiedPoints)
 		{
 			target = null;
 			goal = null;
@@ -99,7 +100,7 @@ class DootBasics : BasicsActor
 			if (InterestPoint[rnd])
 				target = InterestPoint[rnd];
 		}
-	
+		*/
 	}
 	
 	Default

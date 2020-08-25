@@ -43,18 +43,18 @@ class BasicsActor : Actor
     Actor navIndicator;
     action void A_Star()
     {
-        if (Distance2D(target) < 25)
+        if (target && Distance2D(target) < 250 && CheckSight(target))
         {
             invoker.path.Clear();
             goal = null;
-			target = null;
-
+			//target = null;
+			Console.Printf("aaaaaaaaaaaaaaa");
             invoker.A_BasicsChase();
 			
 			if (invoker.navIndicator)
 				invoker.navIndicator.Destroy();
         }
-        else if (NavPoint(goal) && Distance2d(goal) > radius)
+        else if (goal && NavPoint(goal) && Distance2d(goal) > radius)
         {
 			
 			if (!invoker.navIndicator)
@@ -120,26 +120,29 @@ class BasicsActor : Actor
                 NavPoint nav = NavPoint(it.Next());
                 for (; nav; nav = NavPoint(it.Next()))
                 {
-                    double dist = Distance2d(nav);
-                    if ((startDist < 0 || dist < startDist) && CheckSight(nav))
-                    {
-                        startNav = nav;
-                        startDist = dist;
-                    }
-					
-					if (target)
-						dist = target.Distance2d(nav);
-					
-                    if (target && (goalDist < 0 || dist < goalDist) && target.CheckSight(nav))
-                    {
-                        goalNav = nav;
-                        goalDist = dist;
-                    }
+					if (nav)
+					{
+						double dist = Distance2d(nav);
+						if ((startDist < 0 || dist < startDist) && CheckSight(nav))
+						{
+							startNav = nav;
+							startDist = dist;
+						}
+						
+						if (target)
+							dist = target.Distance2d(nav);
+						
+						if (target && (goalDist < 0 || dist < goalDist) && target.CheckSight(nav))
+						{
+							goalNav = nav;
+							goalDist = dist;
+						}
+					}
                 }
 
                 if (!(startNav && goalNav))
                 {
-                    A_Log("\c[Red](ZScript:Pathfinder2:A_Star) Error: NavPoint graph incomplete!");
+                    //A_Log("\c[Red](ZScript:Pathfinder2:A_Star) Error: NavPoint graph incomplete!");
                     return;
                 }
             }
@@ -225,7 +228,7 @@ class BasicsActor : Actor
 
                     // If Plan2 reaches goal, we're done
                     NavPoint lastNav = currentPlan2.path[currentPlan2.path.Size()-1];
-                    if (lastNav == goalNav)
+                    if (goalNav && lastNav == goalNav)
                     {
                         //A_Log("(ZScript:Pathfinder2:A_Star) Path found!");   // DEBUG
 

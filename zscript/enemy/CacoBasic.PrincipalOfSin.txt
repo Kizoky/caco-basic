@@ -91,6 +91,7 @@ class PrincipalBasics : BasicsActor
 					CacoTeacher.goal = null;
 					CacoTeacher.target = target;
 					PunishmentInTime = true;
+					path.Clear();
 				}
 				
 				// "... Detention for you!"
@@ -119,6 +120,7 @@ class PrincipalBasics : BasicsActor
 					{
 						target = InterestPoint[rnd];
 						goal = InterestPoint[rnd];
+						path.Clear();
 					}
 				}
 			
@@ -128,6 +130,7 @@ class PrincipalBasics : BasicsActor
 		
 		if (ExecutingInProgress) return;
 		
+		/*
 		if ((target && Distance2D(target) < 100 || target is 'PlayerPawn') && !ExecutingInProgress)
 		{
 			target = null;
@@ -137,7 +140,8 @@ class PrincipalBasics : BasicsActor
 			if (InterestPoint[rnd])
 				target = InterestPoint[rnd];
 		}
-	
+		*/
+		
 	}
 	
 	Default

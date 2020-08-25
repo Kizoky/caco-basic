@@ -86,7 +86,7 @@ class NavPoint : Actor
                 links.Push(nav);
                 costs.Push(Distance2d(nav));
 
-                A_Log("(ZScript:NavPoint) Link added");    // DEBUG
+                //A_Log("(ZScript:NavPoint) Link added");    // DEBUG
             }
 			
             // Just make sure it's possible to get from one Nav to the other w/o being blocked

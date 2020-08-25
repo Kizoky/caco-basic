@@ -23,9 +23,6 @@ class BasicsPlayer : PlayerPawn
 		Super.Tick();
 		if ( !player || (player.mo != self) ) return;
 		
-		if (CheckInventory("BasicsLogic_Halls",1)) Console.Printf("In the halls");
-		else Console.Printf("Outside");
-		
 		// MoveSpeed > 1.62 = running
 		MoveSpeed = vel.xy.Length();
 		
@@ -58,13 +55,10 @@ class BasicsPlayer : PlayerPawn
 				RunningStop = false;
 			}
 		}
-		else
+		else if (!RunningStop)
 		{
-			if (!RunningStop)
-			{
-				RunningStopCooldown = level.time + 8;
-				RunningStop = true;
-			}
+			RunningStopCooldown = level.time + 8;
+			RunningStop = true;
 		}
 	}
 	
