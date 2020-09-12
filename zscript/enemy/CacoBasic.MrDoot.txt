@@ -1,6 +1,5 @@
 class DootBasics : BasicsActor
 {
-	Array<Actor> InterestPoint;
 	bool DootingInProgress, CopiedPoints;
 	bool HearTheDoot;
 	
@@ -42,9 +41,7 @@ class DootBasics : BasicsActor
 		
 		if (!target && CopiedPoints)
 		{
-			int rnd = random(0,InterestPoint.Size()-1);
-			if (InterestPoint[rnd])
-				target = InterestPoint[rnd];
+			Basics_GoBackToWander();
 		}
 		
 		if (target is 'BasicsPlayer')
@@ -83,6 +80,8 @@ class DootBasics : BasicsActor
 						target.A_SetSpeed(1);
 						DootingInProgress = false;
 						A_SetSpeed(10);
+						
+						Basics_GoBackToWander();
 					}
 				}
 			}
@@ -106,8 +105,8 @@ class DootBasics : BasicsActor
 	Default
 	{
 		Health 300;
-		Radius 10;
-		Height 10;
+		Radius 1;
+		Height 1;
 		Mass 500;
 		Speed 10;
 		PainChance 100;

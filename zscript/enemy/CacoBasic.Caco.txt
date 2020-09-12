@@ -1,6 +1,5 @@
 class CacoBasics : BasicsActor
 {
-	Array<Actor> InterestPoint;
 	int TimeBeforeRuler, DontSpamSight;
 	bool CopiedPoints;
 	

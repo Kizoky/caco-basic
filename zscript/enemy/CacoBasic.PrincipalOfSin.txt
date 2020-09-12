@@ -1,6 +1,5 @@
 class PrincipalBasics : BasicsActor
 {
-	Array<Actor> InterestPoint;
 	int CurrentPoint, WaitBeforeActive;
 	actor DetentionRoomPlayer, DetentionRoomSelf, CacoTeacher;
 	
@@ -106,8 +105,6 @@ class PrincipalBasics : BasicsActor
 				{
 					// Give the Player's speed back
 					target.A_SetSpeed(1);
-					target = null;
-					goal = null;
 					PunishmentInProgress = false;
 					PunishmentInTime = false;
 					DetentionForYou = false;
