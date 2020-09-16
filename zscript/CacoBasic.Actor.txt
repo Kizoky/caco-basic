@@ -1,15 +1,33 @@
 class BasicsActor : Actor
 {
 	Array<Actor> InterestPoint;
+	actor lastTarget;
 	
-	virtual void Basics_GoBackToWander()
+	virtual void Basics_GoBackToWander(actor WanderP)
 	{
-		int rnd = random[wndr](0,InterestPoint.Size()-1);
-		if (InterestPoint[rnd])
+		BasicsCoreHandler Event;
+		Event = BasicsCoreHandler(EventHandler.Find("BasicsCoreHandler"));
+		
+		// This MOSTLY fixes the abnormal crashes
+		// by not going through a random array
+		if (WanderP)
 		{
-			target = InterestPoint[rnd];
-			goal = InterestPoint[rnd];
+			goal = null;
+			target = WanderP;
 			path.Clear();
+			return;
+		}
+		
+		if (Event && level.time % 17 == 0)
+		{
+			int rnd = random[wndr](0,Event.WanderPoint.Size()-1);
+			
+			if (Event.WanderPoint[rnd])
+			{
+				goal = null;
+				target = Event.WanderPoint[rnd];
+				path.Clear();
+			}
 		}
 	}
 	

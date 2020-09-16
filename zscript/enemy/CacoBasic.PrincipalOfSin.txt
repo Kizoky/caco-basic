@@ -27,6 +27,7 @@ class PrincipalBasics : BasicsActor
 					if (Player.MoveSpeed > Player.RunningLength)
 					{
 						goal = null;
+						lastTarget = target;
 						target = Player;
 						Player.A_StartSound("principal/norunninginthehalls", CHAN_AUTO);
 						ExecutingInProgress = true;
@@ -42,22 +43,14 @@ class PrincipalBasics : BasicsActor
 	{
 		Super.PostBeginPlay();
 		
-		WaitBeforeActive = level.time + 35 * 2;
+		//WaitBeforeActive = level.time + 35 * 2;
+		Basics_GoBackToWander(null);
+		lastTarget = target;
 	}
 	
 	override void Tick()
 	{
 		Super.Tick();
-		
-		// PoS will randomly wander around the map if he's activated.
-		if (!target && level.time > WaitBeforeActive)
-		{
-			int rnd = random(0,InterestPoint.Size()-1);
-			if (InterestPoint[rnd])
-				target = InterestPoint[rnd];
-			
-			//target = InterestPoint[random(0,InterestPoint.Size())];
-		}
 		
 		// Player broke the rule. Let's punish him
 		// First we need to get closer to him, and be our target
@@ -112,13 +105,7 @@ class PrincipalBasics : BasicsActor
 					//target = InterestPoint[random(0,InterestPoint.Size())];
 					//goal = InterestPoint[random(0,InterestPoint.Size())];
 					
-					int rnd = random(0,InterestPoint.Size()-1);
-					if (InterestPoint[rnd])
-					{
-						target = InterestPoint[rnd];
-						goal = InterestPoint[rnd];
-						path.Clear();
-					}
+					Basics_GoBackToWander(lastTarget);
 				}
 			
 			}

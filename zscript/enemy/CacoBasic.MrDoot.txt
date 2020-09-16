@@ -24,6 +24,7 @@ class DootBasics : BasicsActor
 				let Player = BasicsPlayer(next);
 				if (Player)
 				{
+					lastTarget = target;
 					goal = null;
 					target = null;
 					target = Player;
@@ -35,14 +36,15 @@ class DootBasics : BasicsActor
 		}
 	}
 	
+	override void PostBeginPlay()
+	{
+		Basics_GoBackToWander(null);
+		lastTarget = target;
+	}
+	
 	override void Tick()
 	{
 		Super.Tick();
-		
-		if (!target && CopiedPoints)
-		{
-			Basics_GoBackToWander();
-		}
 		
 		if (target is 'BasicsPlayer')
 		{
@@ -81,7 +83,7 @@ class DootBasics : BasicsActor
 						DootingInProgress = false;
 						A_SetSpeed(10);
 						
-						Basics_GoBackToWander();
+						Basics_GoBackToWander(lastTarget);
 					}
 				}
 			}
@@ -130,7 +132,7 @@ class DootBasics : BasicsActor
 		SKEL AB 10;
 		Goto See;
 	See:
-		SKEL AABBCCDDEEFF 2 { if (!HearTheDoot) A_Star(); }
+		SKEL AABBCCDDEEFF 2 { if (!HearTheDoot && target) A_Star(); }
 		SKEL A 0 SearchForDootable();
 		Loop;
 	Pain:

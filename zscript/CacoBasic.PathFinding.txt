@@ -4,37 +4,31 @@ extend class BasicsActor
 	
 	array<NavPoint> path;
     //Actor navIndicator;
+	Sector targetSector;
+	
     action void A_Star()
     {
-		/*
         if (CheckSight(target))
         {	
 			if (!(target is 'PlayerPawn') && target)
 			{
-				if (Distance2D(target) < 5)
+				if (Distance2D(target) < 5 && level.time % 35 == 0)
 				{
-					target = null;
+					goal = null;
 					invoker.path.Clear();
 				}
 			}
 			
-            invoker.path.Clear();
-            goal = null;
-			invoker.A_BasicsChase();
+            //invoker.path.Clear();
+            //goal = null;
+			//invoker.A_BasicsChase();
         }
-		*/
 		
-		Console.Printf("target is %s", target.GetClassName());
+		//Console.Printf("target is %s", target.GetClassName());
 		
 		if (target is 'PrincipalInterest' && Distance2D(target) < 10)
 		{
-			int rnd = random(0,invoker.InterestPoint.Size()-1);
-			if (invoker.InterestPoint[rnd])
-			{
-				target = invoker.InterestPoint[rnd];
-				goal = invoker.InterestPoint[rnd];
-				invoker.path.Clear();
-			}
+			invoker.Basics_GoBackToWander(null);
 		}
 		
         if (NavPoint(goal) && Distance2d(goal) > 5)
@@ -67,8 +61,8 @@ extend class BasicsActor
             NavPoint startNav, goalNav;
 
             {
-                double startDist = -1.0;
-                double goalDist = -1.0;
+                double startDist = -2.0;
+                double goalDist = -2.0;
 
                 ThinkerIterator it = ThinkerIterator.Create("NavPoint");
                 NavPoint nav = NavPoint(it.Next());
@@ -103,17 +97,27 @@ extend class BasicsActor
 
             // Find the shortest path from one to the other using A* search
             {
+			if (target.floorSector != invoker.targetSector)
+			{
                 // Fringe contains partial Plan2s under consideration
                 // In spite of appearances, it's actually a binary min-heap
                 // This means that the Plan2 w/ the shortest path is always first
                 // It also means that adding/removing elements is complex (see below)
+				
+				if (goal)
+				{
+					goal = null;
+				}
+				invoker.path.Clear();
+				
+				invoker.targetSector = target.floorSector;
                 array<Plan2> fringe;
 
                 // Initial Plan2
                 fringe.Push(New('Plan2'));
                 fringe[0].path.Push(startNav);
-                fringe[0].givenCost = Distance2d(startNav);
-                fringe[0].heuristicCost = startNav.Distance2d(goalNav);
+                fringe[0].givenCost = 0;
+                fringe[0].heuristicCost = Distance2d(target);
 
                 // Contains NavPoints we've already searched once, so we don't repeat work
                 // Ideally, this should be a tree, but even a dynamic array works wonders
@@ -182,7 +186,7 @@ extend class BasicsActor
 
                     // If Plan2 reaches goal, we're done
                     NavPoint lastNav = currentPlan2.path[currentPlan2.path.Size()-1];
-                    if (goalNav && lastNav == goalNav)
+                    if (goalNav && lastNav && lastNav == goalNav)
                     {
                         //A_Log("(ZScript:Pathfinder2:A_Star) Path found!");   // DEBUG
 
@@ -215,7 +219,11 @@ extend class BasicsActor
                         fringe[index].path.Push(lastNav.links[i]);
 
                         fringe[index].givenCost = currentPlan2.givenCost + lastNav.costs[i];
+						//fringe[index].givenCost = currentPlan.givenCost + link.distance;
+						
                         fringe[index].heuristicCost = lastNav.links[i].Distance2d(goalNav);
+						
+						//fringe[index].heuristicCost += Sqrt(deltaX * deltaX + deltaY * deltaY);
 
                         // Let new node bubble up until its cost is >= its parent's
                         while (index > 0)
@@ -241,9 +249,12 @@ extend class BasicsActor
                             }
                         }
                     }
+					
+					closed.Pop();
                 }
 
                 //A_Log("\c[Yellow](ZScript:Pathfinder2:A_Star) Warning: No Path found!"); // DEBUG
+			}
             }
         }
     }

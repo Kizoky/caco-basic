@@ -2,16 +2,16 @@ class BasicsCoreHandler : EventHandler
 {
 	actor Principal, Caco, Doot;
 	actor DetentionRoomP, DetentionRoomB;
-	Array<Actor> PrincipalPoint;
+	Array<Actor> WanderPoint;
 	
 	override void WorldTick()
 	{
 		let player = players[consoleplayer].mo;
 		
 		let PrincipalOfSin = PrincipalBasics(Principal);
-		if (PrincipalOfSin && PrincipalOfSin.WaitBeforeActive > level.time)
+		if (PrincipalOfSin)
 		{
-			PrincipalOfSin.InterestPoint.Copy(PrincipalPoint);
+			//PrincipalOfSin.InterestPoint.Copy(WanderPoint);
 			
 			PrincipalOfSin.CacoTeacher = Caco;
 				
@@ -22,7 +22,7 @@ class BasicsCoreHandler : EventHandler
 		let Dootka = DootBasics(Doot);
 		if (PrincipalOfSin && Dootka && !Dootka.CopiedPoints)
 		{
-			Dootka.InterestPoint.Copy(PrincipalPoint);
+			//Dootka.InterestPoint.Copy(WanderPoint);
 			Dootka.CopiedPoints = true;
 		}
 		
@@ -30,7 +30,7 @@ class BasicsCoreHandler : EventHandler
 		let Cacod = CacoBasics(Caco);
 		if (PrincipalOfSin && Cacod && !Cacod.CopiedPoints)
 		{
-			Cacod.InterestPoint.Copy(PrincipalPoint);
+			Cacod.InterestPoint.Copy(WanderPoint);
 			Cacod.CopiedPoints = true;
 		}
 		*/
@@ -38,7 +38,6 @@ class BasicsCoreHandler : EventHandler
 	
 	override void NetworkProcess (ConsoleEvent e)
 	{
-		//let vars = PostalVariables(GlobalsContainer.Find("PostalVariables"));
 		if (e.Name ~== "GoalNull")
 		{
 			Caco.goal = null;
@@ -55,7 +54,6 @@ class BasicsCoreHandler : EventHandler
 					BasicsP.FinishedBook();
 				}
 			}
-		
 		}
 	}
 	
@@ -64,7 +62,6 @@ class BasicsCoreHandler : EventHandler
 		// check for multiplayer
 	}
    
-	int TotalInterestPoints;
 	override void WorldThingSpawned (Worldevent e)
 	{
 		let SpawnedThing = e.Thing;
@@ -80,8 +77,8 @@ class BasicsCoreHandler : EventHandler
 		// Grab the interest points for the Principal so he can randomly wander around the map
 		if (SpawnedThing is 'PrincipalInterest')
 		{
-			PrincipalPoint.Push(SpawnedThing);
-			//Console.Printf("Total size: %d", PrincipalPoint.Size());
+			WanderPoint.Push(SpawnedThing);
+			Console.Printf("Total size: %d", WanderPoint.Size());
 		}
 		
 		if (SpawnedThing is 'DetentionRoomPlayer')
